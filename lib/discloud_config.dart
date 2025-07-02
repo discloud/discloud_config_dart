@@ -15,14 +15,9 @@ class DiscloudConfig with ChangeNotifier {
   static Future<DiscloudConfig> fromFileSystemEntity(
     FileSystemEntity entity,
   ) async {
-    if (entity is File) {
-      if (entity.basename != filename) entity = entity.parent;
-    }
+    if (entity is File && entity.basename != filename) entity = entity.parent;
 
-    if (entity is! File) {
-      final filePath = p.join(entity.path, filename);
-      entity = File(filePath);
-    }
+    if (entity is! File) entity = File(p.join(entity.path, filename));
 
     if (!await entity.exists()) return DiscloudConfig(entity);
 
