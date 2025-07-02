@@ -97,7 +97,7 @@ class DiscloudConfig with ChangeNotifier {
   }
 
   Future<void> set(DiscloudScope key, dynamic value) {
-    _rawData.update(key.name, (_) => value);
+    _rawData[key.name] = value;
     return _write();
   }
 
@@ -148,7 +148,7 @@ class DiscloudConfig with ChangeNotifier {
   }
 
   Future<void> _write() async {
-    final content = _parser.stringify(_rawData);
+    final content = _parser.stringify(data.toJson());
 
     await file.writeAsString(content);
   }

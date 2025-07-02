@@ -8,23 +8,19 @@ part of 'data.dart';
 
 DiscloudConfigData _$DiscloudConfigDataFromJson(Map<String, dynamic> json) =>
     DiscloudConfigData(
-      APT: const TextToUnmodifiableListConverter().fromJson(
-        json['APT'] as String?,
-      ),
-      AUTORESTART: const TextToBoolConverter().fromJson(
-        json['AUTORESTART'] as String?,
-      ),
+      APT: const TextToUnmodifiableListConverter().fromJson(json['APT']),
+      AUTORESTART: const TextToBoolConverter().fromJson(json['AUTORESTART']),
       AVATAR: json['AVATAR'] as String?,
       HOSTNAME: json['HOSTNAME'] as String?,
       ID: json['ID'] as String?,
       MAIN: json['MAIN'] as String?,
       NAME: json['NAME'] as String?,
-      RAM: const TextToIntConverter().fromJson(json['RAM'] as String?),
+      RAM: const TextToIntConverter().fromJson(json['RAM']),
       START: json['START'] as String?,
       STORAGE: json['STORAGE'] as String?,
       TYPE: json['TYPE'] as String?,
       VERSION: json['VERSION'] as String?,
-      VLAN: const TextToBoolConverter().fromJson(json['VLAN'] as String?),
+      VLAN: const TextToBoolConverter().fromJson(json['VLAN']),
     );
 
 Map<String, dynamic> _$DiscloudConfigDataToJson(DiscloudConfigData instance) =>
