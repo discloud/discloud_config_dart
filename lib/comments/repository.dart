@@ -1,4 +1,4 @@
-part of '../comments.dart';
+part of 'comments.dart';
 
 class InlineCommentRepository {
   static const char = "#";

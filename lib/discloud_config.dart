@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:discloud_config/comments.dart';
+import 'package:discloud_config/comments/comments.dart';
 import 'package:discloud_config/data.dart';
 import 'package:discloud_config/scopes.dart';
 import 'package:discloud_config/extensions/file_system_entity.dart';
