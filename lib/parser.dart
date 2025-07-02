@@ -5,9 +5,10 @@ class Parser {
   static const _lineBreakSymbol = "\n";
   static const _assignmentSymbol = "=";
 
-  const Parser({required this.inlineCommentRepository});
+  const Parser({required InlineCommentRepository inlineCommentRepository})
+    : _inlineCommentRepository = inlineCommentRepository;
 
-  final InlineCommentRepository inlineCommentRepository;
+  final InlineCommentRepository _inlineCommentRepository;
 
   Map<String, dynamic> parseContent<T>(String content) {
     final lines = content.split(_lineBreakPattern);
@@ -28,18 +29,18 @@ class Parser {
       lines.add(line);
     }
 
-    inlineCommentRepository.write(lines);
+    _inlineCommentRepository.write(lines);
 
     return lines.join(_lineBreakSymbol);
   }
 
   Iterable<MapEntry<String, String>> _parseLines(List<String> lines) sync* {
-    inlineCommentRepository.clear();
+    _inlineCommentRepository.clear();
 
     for (int i = 0; i < lines.length; i++) {
       String rawLine = lines[i].trimRight();
 
-      final line = inlineCommentRepository.parse(i, rawLine);
+      final line = _inlineCommentRepository.parse(i, rawLine);
 
       if (line == null) continue;
 
