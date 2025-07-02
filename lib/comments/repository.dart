@@ -9,32 +9,22 @@ class InlineCommentRepository {
   /// `(?<content>\s*#.*$)`
   static final pattern = RegExp(r"(?<content>\s*#.*$)");
 
-  /// `Map<line, Map<character, Comment>>`
+  InlineCommentRepository();
+
+  /// `Map<line, Comment>`
   final Map<int, InlineCommentEntity> _cache = {};
 
-  int get size {
-    return _cache.length;
-  }
+  int get size => _cache.length;
 
-  bool get isEmpty {
-    return _cache.isEmpty;
-  }
+  bool get isEmpty => _cache.isEmpty;
 
-  bool get isNotEmpty {
-    return _cache.isNotEmpty;
-  }
+  bool get isNotEmpty => _cache.isNotEmpty;
 
-  void clear() {
-    _cache.clear();
-  }
+  void clear() => _cache.clear();
 
-  bool delete(int line) {
-    return _cache.remove(line) != null;
-  }
+  bool delete(int line) => _cache.remove(line) != null;
 
-  InlineCommentEntity? get(int line) {
-    return _cache[line];
-  }
+  InlineCommentEntity? get(int line) => _cache[line];
 
   String? parse(int line, String content) {
     final match = pattern.firstMatch(content);
@@ -72,4 +62,6 @@ class InlineCommentRepository {
   Iterable<InlineCommentEntity> get values sync* {
     yield* _cache.values;
   }
+
+  InlineCommentEntity? operator [](int line) => _cache[line];
 }

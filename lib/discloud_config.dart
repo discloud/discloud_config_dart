@@ -85,6 +85,11 @@ class DiscloudConfig with ChangeNotifier {
     }
   }
 
+  Future<void> create() async {
+    if (await file.exists()) return;
+    await file.create();
+  }
+
   @override
   Future<void> dispose() async {
     await cancelWatch();
