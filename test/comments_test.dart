@@ -37,7 +37,7 @@ void main() {
 
     assert(postLines.length == rawLines.length);
 
-    for (var i = 0; i < postLines.length; i++) {
+    for (int i = 0; i < postLines.length; i++) {
       final actual = postLines[i];
       final expected = rawLines[i];
 
