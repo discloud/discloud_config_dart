@@ -28,7 +28,7 @@ class Parser {
         data[entry.key] = (entry.value as List).join(_separator);
       }
 
-      final line = "${entry.key}$_assignmentSymbol${entry.value}";
+      final line = [entry.key, entry.value].join(_assignmentSymbol);
 
       lines.add(line);
     }
