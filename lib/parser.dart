@@ -4,7 +4,6 @@ class Parser {
   static final _lineBreakPattern = RegExp(r"[\r\n]+");
   static const _lineBreakSymbol = "\n";
   static const _assignmentSymbol = "=";
-  static const _separator = ",";
 
   const Parser({required this.inlineCommentRepository});
 
@@ -24,10 +23,6 @@ class Parser {
     final List<String> lines = [];
 
     for (final entry in data.entries) {
-      if (entry.value is List) {
-        data[entry.key] = (entry.value as List).join(_separator);
-      }
-
       final line = [entry.key, entry.value].join(_assignmentSymbol);
 
       lines.add(line);
