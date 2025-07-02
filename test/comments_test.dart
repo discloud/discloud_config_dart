@@ -1,4 +1,4 @@
-import 'package:discloud_config/comments/comments.dart';
+import 'package:discloud_config/comments.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

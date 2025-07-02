@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'comments.g.dart';
-part 'entity.dart';
-part 'repository.dart';
+part 'comments/entity.dart';
+part 'comments/repository.dart';
