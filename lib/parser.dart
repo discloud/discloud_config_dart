@@ -1,0 +1,56 @@
+import 'package:discloud_config/comments/comments.dart';
+
+class Parser {
+  static final _lineBreakPattern = RegExp(r"[\r\n]+");
+  static const _lineBreakSymbol = "\n";
+  static const _assignmentSymbol = "=";
+  static const _separator = ",";
+
+  const Parser({required this.inlineCommentRepository});
+
+  final InlineCommentRepository inlineCommentRepository;
+
+  Map<String, dynamic> parseContent<T>(String content) {
+    final lines = content.split(_lineBreakPattern);
+    return parseLines(lines);
+  }
+
+  Map<String, dynamic> parseLines<T>(List<String> lines) {
+    final parsed = Map<String, dynamic>.fromEntries(_parseLines(lines));
+    return parsed;
+  }
+
+  String stringify(Map<String, dynamic> data) {
+    final List<String> lines = [];
+
+    for (final entry in data.entries) {
+      if (entry.value is List) {
+        data[entry.key] = (entry.value as List).join(_separator);
+      }
+
+      final line = "${entry.key}$_assignmentSymbol${entry.value}";
+
+      lines.add(line);
+    }
+
+    inlineCommentRepository.write(lines);
+
+    return lines.join(_lineBreakSymbol);
+  }
+
+  Iterable<MapEntry<String, String>> _parseLines(List<String> lines) sync* {
+    inlineCommentRepository.clear();
+
+    for (int i = 0; i < lines.length; i++) {
+      String rawLine = lines[i].trimRight();
+
+      final line = inlineCommentRepository.parse(i, rawLine);
+
+      if (line == null) continue;
+
+      final parts = line.split(_assignmentSymbol);
+
+      yield MapEntry(parts[0], parts[1]);
+    }
+  }
+}
