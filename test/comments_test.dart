@@ -35,7 +35,7 @@ void main() {
 
     inlineCommentRepository.write(postLines);
 
-    assert(postLines.length > 1);
+    assert(postLines.length == rawLines.length);
 
     for (var i = 0; i < postLines.length; i++) {
       final actual = postLines[i];
