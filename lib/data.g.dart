@@ -8,7 +8,7 @@ part of 'data.dart';
 
 DiscloudConfigData _$DiscloudConfigDataFromJson(Map<String, dynamic> json) =>
     DiscloudConfigData(
-      APT: const TextToUnmodifiableListConverter().fromJson(json['APT']),
+      APT: const TextToListConverter().fromJson(json['APT']),
       AUTORESTART: const TextToBoolConverter().fromJson(json['AUTORESTART']),
       AVATAR: json['AVATAR'] as String?,
       HOSTNAME: json['HOSTNAME'] as String?,
@@ -25,8 +25,7 @@ DiscloudConfigData _$DiscloudConfigDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$DiscloudConfigDataToJson(DiscloudConfigData instance) =>
     <String, dynamic>{
-      if (const TextToUnmodifiableListConverter().toJson(instance.APT)
-          case final value?)
+      if (const TextToListConverter().toJson(instance.APT) case final value?)
         'APT': value,
       if (const TextToBoolConverter().toJson(instance.AUTORESTART)
           case final value?)

@@ -12,6 +12,8 @@ class TextToListConverter extends JsonConverter<List<String>, dynamic> {
 
     if (json is List<String>) return json;
 
+    if (json is! String) return [];
+
     return json
         .split(_sepPattern)
         .where((element) => element.isNotEmpty)
@@ -32,9 +34,11 @@ class TextToUnmodifiableListConverter extends TextToListConverter {
 
   @override
   fromJson(json) {
-    if (json == null) return [];
+    if (json == null) return List.unmodifiable([]);
 
     if (json is List<String>) return json;
+
+    if (json is! String) return List.unmodifiable([]);
 
     return List.unmodifiable(
       json.split(_sepPattern).where((element) => element.isNotEmpty),

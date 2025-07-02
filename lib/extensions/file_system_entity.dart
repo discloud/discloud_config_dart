@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:path/path.dart' as p;
 
@@ -9,5 +10,6 @@ extension FileSystemEntityExtension on FileSystemEntity {
   String get extension => p.extension(path);
   String get withoutExtension => p.withoutExtension(path);
 
+  Future<FileSystemEntity> isolateDelete() => Isolate.run(() => delete());
   String relative(String path) => p.relative(path, from: this.path);
 }

@@ -58,8 +58,8 @@ class DiscloudConfig with ChangeNotifier {
   }
 
   late final File file;
-  late Stream<FileSystemEvent>? _fileWatch;
-  late StreamSubscription<FileSystemEvent>? _watchSubscription;
+  Stream<FileSystemEvent>? _fileWatch;
+  StreamSubscription<FileSystemEvent>? _watchSubscription;
 
   late final _inlineCommentRepository = InlineCommentRepository();
   late final _parser = Parser(
@@ -78,6 +78,7 @@ class DiscloudConfig with ChangeNotifier {
 
   Future<void> cancelWatch() async {
     final streamSubscription = _watchSubscription;
+
     if (streamSubscription != null) {
       _watchSubscription = null;
       await streamSubscription.cancel();
@@ -96,55 +97,41 @@ class DiscloudConfig with ChangeNotifier {
     return _write();
   }
 
-  Stream<FileSystemEvent> _watch() {
-    return _fileWatch ??= file.watch();
+  StreamSubscription<FileSystemEvent> watch() {
+    return _watchSubscription ??= _watch().listen((event) async {
+      switch (event.type) {
+        case FileSystemEvent.create:
+        case FileSystemEvent.modify:
+          if (!await file.exists()) break;
+
+          final lines = await file.readAsLines();
+
+          final rawData = _parser.parseLines(lines);
+
+          _rawData
+            ..clear()
+            ..addAll(rawData);
+
+          break;
+      }
+
+      notifyListeners();
+    });
   }
 
-  StreamSubscription<FileSystemEvent> watch({
-    void Function(FileSystemEvent)? onData,
-    Function? onError,
-    void Function()? onDone,
-    bool? cancelOnError,
-  }) {
-    if (_watchSubscription == null) {
-      return _watchSubscription = _watch().listen(
-        (event) async {
-          switch (event.type) {
-            case FileSystemEvent.create:
-            case FileSystemEvent.modify:
-              if (!await file.exists()) break;
-
-              final lines = await file.readAsLines();
-              final rawData = _parser.parseLines(lines);
-
-              _rawData
-                ..clear()
-                ..addAll(rawData);
-
-              break;
-          }
-
-          notifyListeners();
-
-          if (onData != null) onData(event);
-        },
-        cancelOnError: cancelOnError,
-        onDone: onDone,
-        onError: onError ?? () => null,
-      );
-    }
-
-    return (_watchSubscription ??= watch(
-        cancelOnError: cancelOnError,
-        onData: onData,
-      ))
-      ..onDone(onDone)
-      ..onError(onError);
+  Stream<FileSystemEvent> _watch() {
+    return _fileWatch ??= file.watch();
   }
 
   Future<void> _write() async {
     final content = _parser.stringify(data.toJson());
 
-    await file.writeAsString(content);
+    _watchSubscription?.pause();
+
+    await file.writeAsString(content, flush: true);
+
+    _watchSubscription?.resume();
+
+    notifyListeners();
   }
 }

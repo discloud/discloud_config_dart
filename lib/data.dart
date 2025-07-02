@@ -28,7 +28,7 @@ class DiscloudConfigData {
     this.VLAN,
   });
 
-  @TextToUnmodifiableListConverter()
+  @TextToListConverter()
   final List<String> APT;
   @TextToBoolConverter()
   final bool? AUTORESTART;
