@@ -1,5 +1,6 @@
 import 'package:discloud_config/comments/comments.dart';
 import 'package:discloud_config/parser.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -7,13 +8,11 @@ void main() {
     final inlineCommentRepository = InlineCommentRepository();
     final parser = Parser(inlineCommentRepository: inlineCommentRepository);
 
-    const lines = [
-      "# first comment"
-          "ID=test # second comment",
-      "MAIN=main",
-    ];
+    const lines = ["# first comment", "ID=test # second comment", "MAIN=main"];
 
     final rawData = parser.parseLines(lines);
+
+    debugPrint(rawData.entries.join("\n"));
 
     assert(rawData["ID"] == "test");
     assert(rawData["MAIN"] == "main");
