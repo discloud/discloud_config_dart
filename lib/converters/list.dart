@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-class TextToListConverter extends JsonConverter<List<String>, dynamic> {
+class TextToListConverter extends JsonConverter<List<String>?, dynamic> {
   static final _sepPattern = RegExp(r"\s*,\s*");
   static const _separator = ",";
 
@@ -22,26 +22,7 @@ class TextToListConverter extends JsonConverter<List<String>, dynamic> {
 
   @override
   String? toJson(object) {
-    if (object.isEmpty) return null;
+    if (object == null) return null;
     return object.join(_separator);
-  }
-}
-
-class TextToUnmodifiableListConverter extends TextToListConverter {
-  static final _sepPattern = RegExp(r"\s*,\s*");
-
-  const TextToUnmodifiableListConverter();
-
-  @override
-  fromJson(json) {
-    if (json == null) return List.unmodifiable([]);
-
-    if (json is List<String>) return json;
-
-    if (json is! String) return List.unmodifiable([]);
-
-    return List.unmodifiable(
-      json.split(_sepPattern).where((element) => element.isNotEmpty),
-    );
   }
 }

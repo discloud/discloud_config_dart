@@ -13,7 +13,7 @@ class DiscloudConfigData {
       _$DiscloudConfigDataFromJson(json);
 
   const DiscloudConfigData({
-    required this.APT,
+    this.APT,
     this.AUTORESTART,
     this.AVATAR,
     this.HOSTNAME,
@@ -29,7 +29,7 @@ class DiscloudConfigData {
   });
 
   @TextToListConverter()
-  final List<String> APT;
+  final List<String>? APT;
   @TextToBoolConverter()
   final bool? AUTORESTART;
   final String? AVATAR;

@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:discloud_config/comments/comments.dart';
 import 'package:discloud_config/data.dart';
-import 'package:discloud_config/scopes.dart';
 import 'package:discloud_config/extensions/file_system_entity.dart';
 import 'package:discloud_config/parser.dart';
+import 'package:discloud_config/scopes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
@@ -50,11 +50,11 @@ class DiscloudConfig with ChangeNotifier {
       if (file.existsSync()) lines = file.readAsLinesSync();
     }
 
-    final rawData = _parser.parseLines(lines ?? []);
-    _rawData.addAll(rawData);
-
     // ignore: prefer_initializing_formals
     this.file = file;
+
+    final rawData = _parser.parseLines(lines ?? []);
+    _rawData.addAll(rawData);
   }
 
   late final File file;
@@ -67,9 +67,13 @@ class DiscloudConfig with ChangeNotifier {
   );
 
   final Map<String, dynamic> _rawData = {};
-  DiscloudConfigData get data => DiscloudConfigData.fromJson(_rawData);
+  DiscloudConfigData? _data;
+  DiscloudConfigData get data =>
+      _data ??= DiscloudConfigData.fromJson(_rawData);
 
-  File? get mainFile {
+  String? get appId => _rawData[DiscloudScope.ID.name];
+
+  File? get main {
     if (!_rawData.containsKey(DiscloudScope.MAIN.name)) return null;
     final String mainPath = _rawData[DiscloudScope.MAIN.name];
     if (mainPath.isEmpty) return null;
@@ -87,18 +91,19 @@ class DiscloudConfig with ChangeNotifier {
 
   Future<void> create() async {
     if (await file.exists()) return;
+    _data = null;
     await file.create();
   }
 
   @override
   Future<void> dispose() async {
     await cancelWatch();
-
     super.dispose();
   }
 
   Future<void> set(DiscloudScope key, dynamic value) {
     _rawData[key.name] = value;
+    _data = null;
     return _write();
   }
 
@@ -116,6 +121,8 @@ class DiscloudConfig with ChangeNotifier {
           _rawData
             ..clear()
             ..addAll(rawData);
+
+          _data = null;
 
           break;
       }
