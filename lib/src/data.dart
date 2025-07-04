@@ -1,8 +1,8 @@
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
 
-import 'package:discloud_config/converters/bool.dart';
-import 'package:discloud_config/converters/int.dart';
-import 'package:discloud_config/converters/list.dart';
+import 'package:discloud_config/src/converters/bool.dart';
+import 'package:discloud_config/src/converters/int.dart';
+import 'package:discloud_config/src/converters/list.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'data.g.dart';

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:discloud_config/discloud_config.dart';
-import 'package:discloud_config/validator/validator.dart';
+import 'package:discloud_config/src/discloud_config.dart';
+import 'package:discloud_config/src/validator/validator.dart';
 import 'package:path/path.dart';
 import 'package:test/test.dart' as t;
 

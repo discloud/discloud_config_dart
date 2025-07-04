@@ -1,4 +1,4 @@
-import 'package:discloud_config/comments/comments.dart';
+import 'package:discloud_config/src/comments/comments.dart';
 import 'package:test/test.dart' as t;
 
 void main() {

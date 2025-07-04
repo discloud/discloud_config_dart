@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:discloud_config/data.dart';
-import 'package:discloud_config/discloud_config.dart';
-import 'package:discloud_config/scopes.dart';
+import 'package:discloud_config/src/data.dart';
+import 'package:discloud_config/src/discloud_config.dart';
+import 'package:discloud_config/src/scopes.dart';
 import 'package:test/test.dart' as t;
 
 void main() {

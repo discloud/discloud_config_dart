@@ -1,4 +1,4 @@
-import 'package:discloud_config/comments/comments.dart';
+import 'package:discloud_config/src/comments/comments.dart';
 
 class Parser {
   static final _lineBreakPattern = RegExp(r"[\r\n]+");

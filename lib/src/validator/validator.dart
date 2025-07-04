@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:discloud_config/constants.dart';
-import 'package:discloud_config/discloud_config.dart';
-import 'package:discloud_config/scopes.dart';
+import 'package:discloud_config/src/constants.dart';
+import 'package:discloud_config/src/discloud_config.dart';
+import 'package:discloud_config/src/scopes.dart';
 
 part 'avatar.dart';
 part 'main.dart';

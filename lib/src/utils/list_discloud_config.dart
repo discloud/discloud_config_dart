@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:discloud_config/discloud_config.dart';
-import 'package:discloud_config/extensions/file_system_entity.dart';
+import 'package:discloud_config/src/discloud_config.dart';
+import 'package:discloud_config/src/extensions/file_system_entity.dart';
 
 Stream<DiscloudConfig> listDiscloudConfigByAppId(
   Directory directory,
