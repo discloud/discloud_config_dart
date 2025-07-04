@@ -20,7 +20,7 @@ void main() {
       t.expect(line, parsedLines[i]);
       t.expect(inlineCommentRepository.size, i + 1);
 
-      final actual = inlineCommentRepository.get(i)!;
+      final actual = inlineCommentRepository[i]!;
       final expected = comments[i];
 
       t.expect(actual.line, expected.line);
