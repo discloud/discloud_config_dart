@@ -1,8 +1,8 @@
 import 'package:discloud_config/comments/comments.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart' as t;
 
 void main() {
-  test('Testing InlineCommentRepository', () {
+  t.test('Testing InlineCommentRepository', () {
     final inlineCommentRepository = InlineCommentRepository();
 
     const rawLines = ["# first comment", "ID=test # second comment"];
@@ -13,19 +13,19 @@ void main() {
     ];
 
     for (int i = 0; i < rawLines.length; i++) {
-      assert(inlineCommentRepository.size == i);
+      t.expect(inlineCommentRepository.size, i);
 
       final line = inlineCommentRepository.parse(i, rawLines[i]);
 
-      assert(line == parsedLines[i]);
-      assert(inlineCommentRepository.size == i + 1);
+      t.expect(line, parsedLines[i]);
+      t.expect(inlineCommentRepository.size, i + 1);
 
       final actual = inlineCommentRepository.get(i)!;
       final expected = comments[i];
 
-      assert(actual.line == expected.line);
-      assert(actual.character == expected.character);
-      assert(actual.content == expected.content);
+      t.expect(actual.line, expected.line);
+      t.expect(actual.character, expected.character);
+      t.expect(actual.content, expected.content);
     }
 
     assert(inlineCommentRepository.isNotEmpty);
@@ -35,13 +35,13 @@ void main() {
 
     inlineCommentRepository.write(postLines);
 
-    assert(postLines.length == rawLines.length);
+    t.expect(postLines.length, rawLines.length);
 
     for (int i = 0; i < postLines.length; i++) {
       final actual = postLines[i];
       final expected = rawLines[i];
 
-      assert(actual == expected);
+      t.expect(actual, expected);
     }
 
     inlineCommentRepository.clear();

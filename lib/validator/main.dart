@@ -1,14 +1,16 @@
 part of 'validator.dart';
 
-class _MainValidator extends DiscloudValidator {
-  const _MainValidator(super.config);
+class DiscloudMainValidator extends DiscloudValidator {
+  const DiscloudMainValidator(super.config);
 
   @override
   Future<void> validate() async {
     final value = config.main;
 
-    if (value == null) throw ArgumentError.notNull("MAIN");
+    if (value == null) throw ArgumentError.notNull(DiscloudScope.MAIN.name);
 
-    if (!await value.exists()) throw Exception("MAIN file not exists");
+    final access = await value.open();
+
+    await access.close();
   }
 }

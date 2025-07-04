@@ -1,10 +1,10 @@
 import 'package:discloud_config/comments/comments.dart';
 import 'package:discloud_config/parser.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart' as t;
 
 void main() {
-  test('Testing Parser', () {
+  t.test('Testing Parser', () {
     final inlineCommentRepository = InlineCommentRepository();
     final parser = Parser(inlineCommentRepository: inlineCommentRepository);
 
@@ -14,7 +14,7 @@ void main() {
 
     debugPrint(rawData.entries.join("\n"));
 
-    assert(rawData["ID"] == "test");
-    assert(rawData["MAIN"] == "main");
+    t.expect(rawData["ID"], "test");
+    t.expect(rawData["MAIN"], "main");
   });
 }

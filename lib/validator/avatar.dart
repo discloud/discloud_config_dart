@@ -1,7 +1,7 @@
 part of 'validator.dart';
 
-class _AvatarValidator extends DiscloudValidator {
-  const _AvatarValidator(super.config);
+class DiscloudAvatarValidator extends DiscloudValidator {
+  const DiscloudAvatarValidator(super.config);
 
   @override
   void validate() {

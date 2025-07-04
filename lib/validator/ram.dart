@@ -1,7 +1,7 @@
 part of 'validator.dart';
 
-class _RamValidator extends DiscloudValidator {
-  const _RamValidator(super.config);
+class DiscloudRamValidator extends DiscloudValidator {
+  const DiscloudRamValidator(super.config);
 
   @override
   void validate() {
@@ -11,10 +11,15 @@ class _RamValidator extends DiscloudValidator {
 
     final type = config.data.TYPE;
 
+    final error = RangeError.range(
+      value,
+      DiscloudRamMinByType.bot.value,
+      null,
+      DiscloudScope.RAM.name,
+    );
+
     if (type == null) {
-      if (value < DiscloudRamMinByType.bot.value) {
-        throw RangeError.range(value, DiscloudRamMinByType.bot.value, null);
-      }
+      if (value < DiscloudRamMinByType.bot.value) throw error;
 
       return;
     }
@@ -22,9 +27,7 @@ class _RamValidator extends DiscloudValidator {
     for (final min in DiscloudRamMinByType.values) {
       if (type != min.name) continue;
 
-      if (value < min.value) {
-        throw RangeError.range(value, min.value, null, DiscloudScope.RAM.name);
-      }
+      if (value < min.value) throw error;
     }
   }
 }

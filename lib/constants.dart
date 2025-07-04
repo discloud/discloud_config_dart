@@ -1,18 +1,10 @@
-const discloudAptValues = {
-  "canvas",
-  "ffmpeg",
-  "java",
-  "libgl",
-  "openssl",
-  "puppeteer",
-  "tools",
-};
-
 const discloudNameMaxSize = 30;
 
-const discloudTypeValues = {"bot", "site"};
+const discloudRamMin = 100;
 
-const discloudVersionValues = {"latest", "lts", "current", "suja"};
+enum DiscloudApt { canvas, ffmpeg, java, libgl, openssl, puppeteer, tools }
+
+enum DiscloudAppType { bot, site }
 
 enum DiscloudRamMinByType {
   bot(100),
@@ -22,3 +14,5 @@ enum DiscloudRamMinByType {
 
   final int value;
 }
+
+enum DiscloudVersion { latest, lts, current, suja }

@@ -1,15 +1,17 @@
 part of 'validator.dart';
 
-class _TypeValidator extends DiscloudValidator {
-  const _TypeValidator(super.config);
+class DiscloudTypeValidator extends DiscloudValidator {
+  const DiscloudTypeValidator(super.config);
 
   @override
   void validate() {
     final value = config.data.TYPE;
 
-    if (value == null) return;
+    if (value == null || value.isEmpty) return;
 
-    if (!discloudTypeValues.contains(value)) {
+    try {
+      DiscloudAppType.values.byName(value);
+    } catch (_) {
       throw ArgumentError.value(value, DiscloudScope.TYPE.name);
     }
   }
