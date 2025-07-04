@@ -1,11 +1,6 @@
 part of 'comments.dart';
 
 class InlineCommentRepository {
-  static const char = "#";
-
-  /// `[\r\n]+`
-  static final lineBreakPattern = RegExp(r"[\r\n]+");
-
   /// `(?<content>\s*#.*$)`
   static final pattern = RegExp(r"(?<content>\s*#.*$)");
 
