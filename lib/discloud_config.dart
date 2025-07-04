@@ -68,24 +68,25 @@ class DiscloudConfig {
 
   final Map<String, dynamic> _rawData = {};
   DiscloudConfigData? _data;
+
+  /// readonly
   DiscloudConfigData get data =>
       _data ??= DiscloudConfigData.fromJson(_rawData);
 
   String? get appId => _rawData[DiscloudScope.ID.name];
 
   File? get main {
-    if (!_rawData.containsKey(DiscloudScope.MAIN.name)) return null;
-    final String mainPath = _rawData[DiscloudScope.MAIN.name];
-    if (mainPath.isEmpty) return null;
-    return File(p.join(file.parent.path, mainPath));
+    if (_rawData[DiscloudScope.MAIN.name] case final mainPath?) {
+      if (mainPath.isEmpty) return null;
+      return File(p.join(file.parent.path, mainPath));
+    }
+    return null;
   }
 
   Future<void> cancelWatch() async {
-    final streamSubscription = _watchSubscription;
-
-    if (streamSubscription != null) {
+    if (_watchSubscription case final watchSubscription?) {
       _watchSubscription = null;
-      await streamSubscription.cancel();
+      await watchSubscription.cancel();
     }
   }
 
