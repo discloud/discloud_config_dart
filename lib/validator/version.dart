@@ -14,7 +14,7 @@ class _VersionValidator extends DiscloudValidator {
     if (value == null) return;
 
     if (!_versionPattern.hasMatch(value)) {
-      throw ArgumentError.value(value);
+      throw ArgumentError.value(value, DiscloudScope.VERSION.name);
     }
   }
 }

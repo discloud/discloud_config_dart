@@ -9,6 +9,8 @@ class _TypeValidator extends DiscloudValidator {
 
     if (value == null) return;
 
-    if (!discloudTypeValues.contains(value)) throw ArgumentError.value(value);
+    if (!discloudTypeValues.contains(value)) {
+      throw ArgumentError.value(value, DiscloudScope.TYPE.name);
+    }
   }
 }

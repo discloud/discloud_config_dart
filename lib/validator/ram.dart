@@ -22,7 +22,9 @@ class _RamValidator extends DiscloudValidator {
     for (final min in DiscloudRamMinByType.values) {
       if (type != min.name) continue;
 
-      if (value < min.value) throw RangeError.range(value, min.value, null);
+      if (value < min.value) {
+        throw RangeError.range(value, min.value, null, DiscloudScope.RAM.name);
+      }
     }
   }
 }

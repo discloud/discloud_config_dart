@@ -10,7 +10,12 @@ class _NameValidator extends DiscloudValidator {
     if (value == null) return;
 
     if (value.length > discloudNameMaxSize) {
-      throw RangeError.range(value.length, null, discloudNameMaxSize);
+      throw RangeError.range(
+        value.length,
+        null,
+        discloudNameMaxSize,
+        DiscloudScope.NAME.name,
+      );
     }
   }
 }
