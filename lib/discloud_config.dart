@@ -96,6 +96,11 @@ class DiscloudConfig with ChangeNotifier {
     await file.create();
   }
 
+  Future<void> delete() async {
+    if (!await file.exists()) return;
+    await file.delete();
+  }
+
   @override
   Future<void> dispose() async {
     await cancelWatch();
@@ -104,6 +109,12 @@ class DiscloudConfig with ChangeNotifier {
 
   Future<void> set(DiscloudScope key, dynamic value) {
     _rawData[key.name] = value;
+    _data = null;
+    return _write();
+  }
+
+  Future<void> setData(DiscloudConfigData data) {
+    _rawData.addAll(data.toJson());
     _data = null;
     return _write();
   }

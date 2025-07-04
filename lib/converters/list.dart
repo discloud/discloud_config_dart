@@ -8,11 +8,13 @@ class TextToListConverter extends JsonConverter<List<String>?, dynamic> {
 
   @override
   fromJson(json) {
-    if (json == null) return [];
+    if (json == null) return null;
 
     if (json is List<String>) return json;
 
-    if (json is! String) return [];
+    if (json is Iterable<String>) return json.toList();
+
+    if (json is! String) return null;
 
     return json
         .split(_sepPattern)
