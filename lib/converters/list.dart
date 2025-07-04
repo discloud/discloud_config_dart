@@ -7,7 +7,7 @@ class TextToListConverter extends JsonConverter<List<String>?, dynamic> {
   const TextToListConverter();
 
   @override
-  fromJson(json) {
+  List<String>? fromJson(dynamic json) {
     if (json == null) return null;
 
     if (json is List<String>) return json;
@@ -23,7 +23,7 @@ class TextToListConverter extends JsonConverter<List<String>?, dynamic> {
   }
 
   @override
-  String? toJson(object) {
+  String? toJson(List<String>? object) {
     if (object == null) return null;
     return object.join(_separator);
   }

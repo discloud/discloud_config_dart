@@ -49,6 +49,7 @@ void main() {
         final config = DiscloudConfig(file, const []);
 
         t.expect(config.data.MAIN, null);
+        t.expect(config.main, null);
 
         t.expect(
           () => DiscloudMainValidator(config).validate(),
@@ -62,6 +63,7 @@ void main() {
         final config = DiscloudConfig(file, const ["MAIN="]);
 
         t.expect(config.data.MAIN, value);
+        t.expect(config.main, null);
 
         t.expect(
           () => DiscloudMainValidator(config).validate(),
@@ -75,6 +77,7 @@ void main() {
         final config = DiscloudConfig(file, ["MAIN=$value"]);
 
         t.expect(config.data.MAIN, value);
+        t.expect(config.main, t.isA<File>());
 
         t.expect(
           () => DiscloudMainValidator(config).validate(),

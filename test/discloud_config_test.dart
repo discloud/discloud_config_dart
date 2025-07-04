@@ -11,7 +11,7 @@ void main() {
 
     final config = await DiscloudConfig.fromFileSystemEntity(directory);
 
-    await config.setData(DiscloudConfigData());
+    await config.setData(const DiscloudConfigData());
 
     assert(config.data.toJson().isEmpty);
 

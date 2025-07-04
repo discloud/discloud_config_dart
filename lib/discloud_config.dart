@@ -1,3 +1,5 @@
+// ignore_for_file: parameter_assignments
+
 import 'dart:async';
 import 'dart:io';
 
@@ -21,7 +23,7 @@ class DiscloudConfig {
 
     if (!await entity.exists()) return DiscloudConfig(entity);
 
-    List<String> lines = await entity.readAsLines();
+    final List<String> lines = await entity.readAsLines();
 
     return DiscloudConfig(entity, lines);
   }
@@ -73,12 +75,12 @@ class DiscloudConfig {
   DiscloudConfigData get data =>
       _data ??= DiscloudConfigData.fromJson(_rawData);
 
-  String? get appId => _rawData[DiscloudScope.ID.name];
+  String? get appId => _rawData[DiscloudScope.ID.name] as String?;
 
   File? get main {
-    if (_rawData[DiscloudScope.MAIN.name] case final mainPath?) {
-      if (mainPath.isEmpty) return null;
-      return File(p.join(file.parent.path, mainPath));
+    if (_rawData[DiscloudScope.MAIN.name] case final String path) {
+      if (path.isEmpty) return null;
+      return File(p.join(file.parent.path, path));
     }
     return null;
   }
@@ -137,8 +139,6 @@ class DiscloudConfig {
             ..addAll(rawData);
 
           _data = null;
-
-          break;
       }
 
       yield data;

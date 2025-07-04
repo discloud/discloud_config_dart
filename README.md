@@ -1,39 +1,35 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Discloud Config
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A configuration file handler to use with Discloud host
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Useful links
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- [Discloud](https://discloud.com/)
+- [Discloud Docs](https://docs.discloud.com/en)
+- [Discloud Config Docs](https://docs.discloudbot.com/discloud.config)
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+[![Discord](https://discord.com/api/guilds/584490943034425391/widget.png?style=banner2)](https://discord.gg/discloud)
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Import
 
 ```dart
-const like = 'sample';
+import 'package:discloud_config/discloud_config.dart
 ```
 
-## Additional information
+### List all configuration files recursively
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+await for (File file in listDiscloudConfigFiles(directory)) {
+  // ...
+}
+```
+
+### Recursively list configuration structures by ID
+
+```dart
+await for (DiscloudConfig config in listDiscloudConfigByAppId(directory, appId)) {
+  // ...
+}
+```

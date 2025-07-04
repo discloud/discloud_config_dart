@@ -8,14 +8,14 @@ class TextToBoolConverter extends JsonConverter<bool?, dynamic> {
   const TextToBoolConverter();
 
   @override
-  fromJson(json) {
+  bool? fromJson(dynamic json) {
     if (json is bool) return json;
     if (_bools.contains(json)) return json == _true;
     return null;
   }
 
   @override
-  String? toJson(object) {
+  String? toJson(bool? object) {
     if (object == null) return null;
     return "$object";
   }

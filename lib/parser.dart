@@ -6,7 +6,7 @@ class Parser {
   static const _assignmentSymbol = "=";
 
   const Parser({required InlineCommentRepository inlineCommentRepository})
-    : _inlineCommentRepository = inlineCommentRepository;
+      : _inlineCommentRepository = inlineCommentRepository;
 
   final InlineCommentRepository _inlineCommentRepository;
 
@@ -38,7 +38,7 @@ class Parser {
     _inlineCommentRepository.clear();
 
     for (int i = 0; i < lines.length; i++) {
-      String rawLine = lines[i].trimRight();
+      final String rawLine = lines[i].trimRight();
 
       final line = _inlineCommentRepository.parse(i, rawLine);
 

@@ -9,9 +9,6 @@ part 'data.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class DiscloudConfigData {
-  factory DiscloudConfigData.fromJson(Map<String, dynamic> json) =>
-      _$DiscloudConfigDataFromJson(json);
-
   const DiscloudConfigData({
     this.APT,
     this.AUTORESTART,
@@ -27,6 +24,9 @@ class DiscloudConfigData {
     this.VERSION,
     this.VLAN,
   });
+
+  factory DiscloudConfigData.fromJson(Map<String, dynamic> json) =>
+      _$DiscloudConfigDataFromJson(json);
 
   @TextToListConverter()
   final List<String>? APT;
