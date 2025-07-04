@@ -10,6 +10,15 @@ const discloudAptValues = {
 
 const discloudNameMaxSize = 30;
 
-const discloudRamMin = 100;
-
 const discloudTypeValues = {"bot", "site"};
+
+const discloudVersionValues = {"latest", "lts", "current", "suja"};
+
+enum DiscloudRamMinByType {
+  bot(100),
+  site(512);
+
+  const DiscloudRamMinByType(this.value);
+
+  final int value;
+}

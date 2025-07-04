@@ -6,6 +6,7 @@ import 'package:discloud_config/data.dart';
 import 'package:discloud_config/extensions/file_system_entity.dart';
 import 'package:discloud_config/parser.dart';
 import 'package:discloud_config/scopes.dart';
+import 'package:discloud_config/validator/validator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
@@ -105,6 +106,10 @@ class DiscloudConfig with ChangeNotifier {
     _rawData[key.name] = value;
     _data = null;
     return _write();
+  }
+
+  Future<void> validate() async {
+    await DiscloudValidator.validateAll(this);
   }
 
   StreamSubscription<FileSystemEvent> watch() {
