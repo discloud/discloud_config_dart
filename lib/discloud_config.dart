@@ -7,10 +7,9 @@ import 'package:discloud_config/extensions/file_system_entity.dart';
 import 'package:discloud_config/parser.dart';
 import 'package:discloud_config/scopes.dart';
 import 'package:discloud_config/validator/validator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
-class DiscloudConfig with ChangeNotifier {
+class DiscloudConfig {
   static const filename = "discloud.config";
 
   static Future<DiscloudConfig> fromFileSystemEntity(
@@ -101,10 +100,8 @@ class DiscloudConfig with ChangeNotifier {
     await file.delete();
   }
 
-  @override
   Future<void> dispose() async {
     await cancelWatch();
-    super.dispose();
   }
 
   Future<void> set(DiscloudScope key, dynamic value) {
@@ -123,8 +120,8 @@ class DiscloudConfig with ChangeNotifier {
     await DiscloudValidator.validateAll(this);
   }
 
-  StreamSubscription<FileSystemEvent> watch() {
-    return _watchSubscription ??= _watch().listen((event) async {
+  Stream<DiscloudConfigData> watch() async* {
+    await for (final event in _watch()) {
       switch (event.type) {
         case FileSystemEvent.create:
         case FileSystemEvent.modify:
@@ -143,8 +140,8 @@ class DiscloudConfig with ChangeNotifier {
           break;
       }
 
-      notifyListeners();
-    });
+      yield data;
+    }
   }
 
   Stream<FileSystemEvent> _watch() {
@@ -159,7 +156,5 @@ class DiscloudConfig with ChangeNotifier {
     await file.writeAsString(content, flush: true);
 
     _watchSubscription?.resume();
-
-    notifyListeners();
   }
 }
