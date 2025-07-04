@@ -13,10 +13,5 @@ enum DiscloudScope {
   TYPE,
   VERSION,
   STORAGE,
-  VLAN;
-
-  const DiscloudScope();
-
-  @override
-  toString() => name;
+  VLAN,
 }
