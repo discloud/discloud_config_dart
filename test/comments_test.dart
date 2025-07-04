@@ -37,10 +37,8 @@ void main() {
 
     t.expect(postLines.length, rawLines.length);
 
-    for (int i = 0; i < postLines.length; i++) {
-      final actual = postLines[i];
+    for (final (i, actual) in postLines.indexed) {
       final expected = rawLines[i];
-
       t.expect(actual, expected);
     }
 
