@@ -43,10 +43,41 @@ await DiscloudConfig.fromPath(String);
 await DiscloudConfig.fromUri(Uri);
 ```
 
+### Watch configuration file
+
+- `DiscloudConfigData` is read-only, see [`Updating DiscloudConfigData`](#updating-discloudconfigdata)
+- It works until the file is `moved` or `deleted`
+
+```dart
+// Stream<DiscloudConfigData>
+await for (final DiscloudConfigData data in config.watch()) {
+  // ...
+}
+```
+
+### Create a new DiscloudConfigData from JSON
+
+```dart
+DiscloudConfigData.fromJson(Map<String, dynamic>);
+```
+
+### Updating DiscloudConfigData
+
+```dart
+// Convert to raw data
+final Map<String, dynamic> oldRawData = oldData.toJson();
+
+// Update raw data
+oldRawData["TYPE"] = "bot";
+
+// Convert to data
+final newData = DiscloudConfigData.fromJson(oldRawData);
+```
+
 ### List all configuration files recursively
 
 ```dart
-// `Stream<File> listDiscloudConfigFiles`
+// Stream<File>
 await for (final File file in listDiscloudConfigFiles(directory)) {
   // ...
 }
@@ -55,7 +86,7 @@ await for (final File file in listDiscloudConfigFiles(directory)) {
 ### Recursively list configuration structures by ID
 
 ```dart
-// `Stream<DiscloudConfig> listDiscloudConfigFiles`
+// Stream<DiscloudConfig>
 await for (final DiscloudConfig config in listDiscloudConfigByAppId(directory, appId)) {
   // ...
 }
