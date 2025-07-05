@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:io';
 
 import 'package:discloud_config/src/discloud_config.dart';
