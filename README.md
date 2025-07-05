@@ -116,6 +116,12 @@ changes (like documentation, minor bug fixes), just send a pull request.
 
 All pull requests are validated against CI, and must pass.
 
+Ensure build runs
+
+```sh
+dart run build_runner build
+```
+
 Ensure code passes all our [analyzer checks][analysis_options]:
 
 ```sh
