@@ -14,9 +14,9 @@ InlineCommentEntity _$InlineCommentEntityFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$InlineCommentEntityToJson(
-  InlineCommentEntity instance,
-) => <String, dynamic>{
-  'line': instance.line,
-  'character': instance.character,
-  'content': instance.content,
-};
+        InlineCommentEntity instance) =>
+    <String, dynamic>{
+      'line': instance.line,
+      'character': instance.character,
+      'content': instance.content,
+    };
