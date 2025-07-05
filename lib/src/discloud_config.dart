@@ -39,7 +39,7 @@ class DiscloudConfig {
       FileSystemEntityType.directory => fromFileSystemEntity(Directory(path)),
       FileSystemEntityType.file => fromFileSystemEntity(File(path)),
       FileSystemEntityType.notFound => fromFileSystemEntity(File(path).parent),
-      _ => throw Exception("Invalid path"),
+      _ => throw ArgumentError.value(path, "path"),
     };
   }
 
