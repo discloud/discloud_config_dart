@@ -6,11 +6,13 @@ import 'dart:io';
 import 'package:discloud_config/src/comments/comments.dart';
 import 'package:discloud_config/src/data.dart';
 import 'package:discloud_config/src/extensions/file_system_entity.dart';
+import 'package:discloud_config/src/extensions/file_system_event.dart';
 import 'package:discloud_config/src/parser.dart';
 import 'package:discloud_config/src/scopes.dart';
 import 'package:discloud_config/src/validator/validator.dart';
 import 'package:path/path.dart' as p;
 
+/// the [lines] argument receives a list of lines from the configuration file contents
 class DiscloudConfig {
   static const filename = "discloud.config";
 
@@ -60,8 +62,6 @@ class DiscloudConfig {
   }
 
   late final File file;
-  Stream<FileSystemEvent>? _fileWatch;
-  StreamSubscription<FileSystemEvent>? _watchSubscription;
 
   late final _inlineCommentRepository = InlineCommentRepository();
   late final _parser = Parser(
@@ -85,13 +85,6 @@ class DiscloudConfig {
     return null;
   }
 
-  Future<void> cancelWatch() async {
-    if (_watchSubscription case final watchSubscription?) {
-      _watchSubscription = null;
-      await watchSubscription.cancel();
-    }
-  }
-
   Future<void> create() async {
     if (await file.exists()) return;
     _data = null;
@@ -101,10 +94,6 @@ class DiscloudConfig {
   Future<void> delete() async {
     if (!await file.exists()) return;
     await file.delete();
-  }
-
-  Future<void> dispose() async {
-    await cancelWatch();
   }
 
   Future<void> set(DiscloudScope key, dynamic value) {
@@ -124,38 +113,26 @@ class DiscloudConfig {
   }
 
   Stream<DiscloudConfigData> watch() async* {
-    await for (final event in _watch()) {
-      switch (event.type) {
-        case FileSystemEvent.create:
-        case FileSystemEvent.modify:
-          if (!await file.exists()) break;
+    await for (final event in file.watch()) {
+      if (event.isDelete || !await file.exists()) break;
 
-          final lines = await file.readAsLines();
+      final lines = await file.readAsLines();
 
-          final rawData = _parser.parseLines(lines);
+      final rawData = _parser.parseLines(lines);
 
-          _rawData
-            ..clear()
-            ..addAll(rawData);
+      _rawData
+        ..clear()
+        ..addAll(rawData);
 
-          _data = null;
-      }
+      _data = null;
 
       yield data;
     }
   }
 
-  Stream<FileSystemEvent> _watch() {
-    return _fileWatch ??= file.watch();
-  }
-
   Future<void> _write() async {
     final content = _parser.stringify(data.toJson());
 
-    _watchSubscription?.pause();
-
     await file.writeAsString(content, flush: true);
-
-    _watchSubscription?.resume();
   }
 }
