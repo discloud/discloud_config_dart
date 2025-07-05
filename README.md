@@ -1,10 +1,13 @@
 # Discloud Config
 
+[![pub package](https://img.shields.io/pub/v/discloud_config.svg)](https://pub.dev/packages/discloud_config)
+[![package publisher](https://img.shields.io/pub/publisher/discloud_config.svg)](https://pub.dev/packages/discloud_config/publisher)
+
 A configuration file handler to use with Discloud host
 
 ## Useful links
 
-- [Discloud](https://discloud.com/)
+- [Discloud](https://discloud.com)
 - [Discloud Docs](https://docs.discloud.com/en)
 - [Discloud Config Docs](https://docs.discloudbot.com/discloud.config)
 
