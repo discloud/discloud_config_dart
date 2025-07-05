@@ -1,17 +1,25 @@
-# Discloud Config
+<!-- markdownlint-disable MD041 -->
 
-[![pub package](https://img.shields.io/pub/v/discloud_config.svg)](https://pub.dev/packages/discloud_config)
-[![package publisher](https://img.shields.io/pub/publisher/discloud_config.svg)](https://pub.dev/packages/discloud_config/publisher)
+[![pub package](https://img.shields.io/pub/v/discloud_config.svg)][package_config]
+[![package publisher](https://img.shields.io/pub/publisher/discloud_config.svg)][package_config_publisher]
 
 A configuration file handler to use with Discloud host
 
 ## Useful links
 
 - [Discloud](https://discloud.com)
-- [Discloud Docs](https://docs.discloud.com/en)
+- [Discloud Docs](https://docs.discloud.com)
 - [Discloud Config Docs](https://docs.discloudbot.com/discloud.config)
 
 [![Discord](https://discord.com/api/guilds/584490943034425391/widget.png?style=banner2)](https://discord.gg/discloud)
+
+## Installation
+
+Add it to your [`pubspec.yaml`][pubspec] as a [dependencies] by running the following command.
+
+```console
+dart pub add discloud_config
+```
 
 ## Usage
 
@@ -91,3 +99,21 @@ await for (final DiscloudConfig config in listDiscloudConfigByAppId(Directory, S
   // ...
 }
 ```
+
+## Contributing
+
+We welcome a diverse set of contributions, including, but not limited to:
+
+- [Filing bugs and feature requests][file_an_issue]
+- [Send a pull request][pull_request]
+- Or, create something awesome using this API and share with us and others!
+
+For the stability of the API and existing users, consider opening an issue
+first before implementing a large new feature or breaking an API. For smaller
+changes (like documentation, minor bug fixes), just send a pull request.
+
+[package_config]: https://pub.dev/packages/discloud_config
+[package_config_publisher]: https://pub.dev/packages/discloud_config/publisher
+[pubspec]: https://dart.dev/tools/pub/pubspec
+[file_an_issue]: https://github.com/discloud/discloud_config_dart/issues/new
+[pull_request]: https://github.com/discloud/discloud_config_dart/pulls
