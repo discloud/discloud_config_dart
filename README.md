@@ -104,7 +104,7 @@ await for (final DiscloudConfig config in listDiscloudConfigByAppId(Directory, S
 
 We welcome a diverse set of contributions, including, but not limited to:
 
-- [Filing bugs and feature requests][file_an_issue]
+- [Filing bugs and feature requests][new_issue]
 - [Send a pull request][pull_request]
 - Or, create something awesome using this API and share with us and others!
 
@@ -112,8 +112,9 @@ For the stability of the API and existing users, consider opening an issue
 first before implementing a large new feature or breaking an API. For smaller
 changes (like documentation, minor bug fixes), just send a pull request.
 
+[dependencies]: https://dart.dev/tools/pub/dependencies
+[new_issue]: https://github.com/discloud/discloud_config_dart/issues/new
 [package_config]: https://pub.dev/packages/discloud_config
 [package_config_publisher]: https://pub.dev/packages/discloud_config/publisher
 [pubspec]: https://dart.dev/tools/pub/pubspec
-[file_an_issue]: https://github.com/discloud/discloud_config_dart/issues/new
 [pull_request]: https://github.com/discloud/discloud_config_dart/pulls
