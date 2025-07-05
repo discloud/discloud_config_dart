@@ -78,7 +78,7 @@ final newData = DiscloudConfigData.fromJson(oldRawData);
 
 ```dart
 // Stream<File>
-await for (final File file in listDiscloudConfigFiles(directory)) {
+await for (final File file in listDiscloudConfigFiles(Directory)) {
   // ...
 }
 ```
@@ -87,7 +87,7 @@ await for (final File file in listDiscloudConfigFiles(directory)) {
 
 ```dart
 // Stream<DiscloudConfig>
-await for (final DiscloudConfig config in listDiscloudConfigByAppId(directory, appId)) {
+await for (final DiscloudConfig config in listDiscloudConfigByAppId(Directory, String)) {
   // ...
 }
 ```
