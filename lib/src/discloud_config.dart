@@ -62,7 +62,7 @@ class DiscloudConfig {
     // ignore: prefer_initializing_formals
     this.file = file;
 
-    final rawData = _parser.parseLines(lines ?? []);
+    final rawData = _configParser.parseLines(lines ?? []);
     _rawData.addAll(rawData);
   }
 
@@ -70,7 +70,7 @@ class DiscloudConfig {
   late final File file;
 
   late final _inlineCommentRepository = InlineCommentRepository();
-  late final _parser = Parser(
+  late final _configParser = DiscloudConfigParser(
     inlineCommentRepository: _inlineCommentRepository,
   );
 
@@ -115,7 +115,6 @@ class DiscloudConfig {
     return _write();
   }
 
-
   /// Set [DiscloudConfigData]
   ///
   /// See [configuration docs](https://docs.discloudbot.com/discloud.config)
@@ -131,11 +130,11 @@ class DiscloudConfig {
   }
 
   /// Watch the configuration [File] for changes
-  /// 
+  ///
   /// Works until `delete` or `move` [File]
-  /// 
+  ///
   /// Emits [DiscloudConfigData] on all changes
-  /// 
+  ///
   /// No emit on `delete` or `move`
   Stream<DiscloudConfigData> watch() async* {
     await for (final event in file.watch()) {
@@ -143,7 +142,7 @@ class DiscloudConfig {
 
       final lines = await file.readAsLines();
 
-      final rawData = _parser.parseLines(lines);
+      final rawData = _configParser.parseLines(lines);
 
       _rawData
         ..clear()
@@ -156,7 +155,7 @@ class DiscloudConfig {
   }
 
   Future<void> _write() async {
-    final content = _parser.stringify(data.toJson());
+    final content = _configParser.stringify(data.toJson());
 
     await file.writeAsString(content, flush: true);
   }

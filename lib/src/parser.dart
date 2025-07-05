@@ -2,13 +2,14 @@
 
 import 'package:discloud_config/src/comments/comments.dart';
 
-class Parser {
+class DiscloudConfigParser {
   static final _lineBreakPattern = RegExp(r"[\r\n]+");
   static const _lineBreakSymbol = "\n";
   static const _assignmentSymbol = "=";
 
-  const Parser({required InlineCommentRepository inlineCommentRepository})
-      : _inlineCommentRepository = inlineCommentRepository;
+  const DiscloudConfigParser({
+    required InlineCommentRepository inlineCommentRepository,
+  }) : _inlineCommentRepository = inlineCommentRepository;
 
   final InlineCommentRepository _inlineCommentRepository;
 
@@ -26,7 +27,7 @@ class Parser {
     final List<String> lines = [];
 
     for (final entry in data.entries) {
-      final line = [entry.key, entry.value].join(_assignmentSymbol);
+      final line = "${entry.key}$_assignmentSymbol${entry.value}";
 
       lines.add(line);
     }
