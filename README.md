@@ -17,7 +17,7 @@ A configuration file handler to use with Discloud host
 
 Add it to your [`pubspec.yaml`][pubspec] as a [dependencies] by running the following command.
 
-```console
+```sh
 dart pub add discloud_config
 ```
 
@@ -112,7 +112,31 @@ For the stability of the API and existing users, consider opening an issue
 first before implementing a large new feature or breaking an API. For smaller
 changes (like documentation, minor bug fixes), just send a pull request.
 
+## Testing
+
+All pull requests are validated against CI, and must pass.
+
+Ensure code passes all our [analyzer checks][analysis_options]:
+
+```sh
+dart analyze
+```
+
+Ensure all code is formatted with the latest [dev-channel SDK][dev_sdk].
+
+```sh
+dart format .
+```
+
+Run all of our unit tests:
+
+```sh
+dart test
+```
+
+[analysis_options]: analysis_options.yaml
 [dependencies]: https://dart.dev/tools/pub/dependencies
+[dev_sdk]: https://dart.dev/get-dart
 [new_issue]: https://github.com/discloud/discloud_config_dart/issues/new
 [package_config]: https://pub.dev/packages/discloud_config
 [package_config_publisher]: https://pub.dev/packages/discloud_config/publisher
