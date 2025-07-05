@@ -82,7 +82,7 @@ class DiscloudConfig {
       _data ??= DiscloudConfigData.fromJson(_rawData);
 
   /// The `ID` property from configuration [File]
-  String? get appId => _rawData[DiscloudScope.ID.name] as String?;
+  String? get appId => _rawData[DiscloudScope.ID.name];
 
   /// The `MAIN` property from configuration [File]
   File? get main {
