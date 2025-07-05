@@ -18,10 +18,33 @@ A configuration file handler to use with Discloud host
 import 'package:discloud_config/discloud_config.dart
 ```
 
+### Make an instance
+
+```dart
+/// the [lines] argument receives a list of lines from the configuration file contents
+DiscloudConfig(File, [List<String>?]);
+```
+
+- It can also be asynchronous
+
+```dart
+// import 'dart:io';
+await DiscloudConfig.fromFileSystemEntity(FileSystemEntity);
+```
+
+```dart
+await DiscloudConfig.fromPath(String);
+```
+
+```dart
+await DiscloudConfig.fromUri(Uri);
+```
+
 ### List all configuration files recursively
 
 ```dart
-await for (File file in listDiscloudConfigFiles(directory)) {
+// `Stream<File> listDiscloudConfigFiles`
+await for (final File file in listDiscloudConfigFiles(directory)) {
   // ...
 }
 ```
@@ -29,7 +52,8 @@ await for (File file in listDiscloudConfigFiles(directory)) {
 ### Recursively list configuration structures by ID
 
 ```dart
-await for (DiscloudConfig config in listDiscloudConfigByAppId(directory, appId)) {
+// `Stream<DiscloudConfig> listDiscloudConfigFiles`
+await for (final DiscloudConfig config in listDiscloudConfigByAppId(directory, appId)) {
   // ...
 }
 ```
