@@ -46,7 +46,7 @@ class InlineCommentRepository {
   void write(List<String> lines) {
     if (isEmpty) return;
 
-    for (final comment in values) {
+    for (final comment in _cache.values) {
       if (comment.character > 0) {
         lines[comment.line] += comment.content;
         continue;
