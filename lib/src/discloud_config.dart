@@ -25,7 +25,7 @@ class DiscloudConfig {
 
     if (entity is! File) entity = File(p.join(entity.path, filename));
 
-    if (!await entity.exists()) return DiscloudConfig(entity);
+    if (!await entity.exists()) return DiscloudConfig(entity, const []);
 
     final List<String> lines = await entity.readAsLines();
 
@@ -43,7 +43,7 @@ class DiscloudConfig {
     };
   }
 
-  /// Asynchronous instance from [Uri] path
+  /// Asynchronous instance from [Uri]
   static Future<DiscloudConfig> fromUri(Uri uri) {
     return fromPath(uri.toFilePath());
   }
@@ -62,7 +62,9 @@ class DiscloudConfig {
     // ignore: prefer_initializing_formals
     this.file = file;
 
-    final rawData = _configParser.parseLines(lines ?? []);
+    if (lines == null || lines.isEmpty) return;
+
+    final rawData = _configParser.parseLines(lines);
     _rawData.addAll(rawData);
   }
 
