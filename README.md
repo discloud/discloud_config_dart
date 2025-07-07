@@ -11,7 +11,7 @@ A configuration file handler to use with Discloud host
 - [Discloud Docs](https://docs.discloud.com)
 - [Discloud Config Docs](https://docs.discloudbot.com/discloud.config)
 
-[![Discord](https://discord.com/api/guilds/584490943034425391/widget.png?style=banner2)](https://discord.gg/discloud)
+[![Discord](https://discord.com/api/guilds/584490943034425391/widget.png?style=banner2)](https://discord.discloudbot.com)
 
 ## Installation
 
