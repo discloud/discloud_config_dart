@@ -10,7 +10,7 @@ void main() {
 
     const lines = ["# first comment", "ID=test # second comment", "MAIN=main"];
 
-    final rawData = parser.parseLines(lines);
+    final Map<String, dynamic> rawData = parser.parseLines(lines);
 
     t.expect(rawData["ID"], "test");
     t.expect(rawData["MAIN"], "main");

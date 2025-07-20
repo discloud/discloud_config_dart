@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:discloud_config/src/data.dart';
-import 'package:discloud_config/src/discloud_config.dart';
-import 'package:discloud_config/src/scopes.dart';
+import 'package:discloud_config/discloud_config.dart';
 import 'package:test/test.dart' as t;
 
 void main() {
@@ -17,11 +15,10 @@ void main() {
 
     await config.set(DiscloudScope.AUTORESTART, true);
 
-    assert(config.data.AUTORESTART != null);
-    assert(config.data.AUTORESTART!);
+    t.expect(config.data.AUTORESTART, true);
 
     await config.delete();
 
-    assert(!await config.file.exists());
+    t.expect(await config.file.exists(), false);
   });
 }
