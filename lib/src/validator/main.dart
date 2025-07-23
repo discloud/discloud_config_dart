@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs
-
 part of 'validator.dart';
 
+/// A validator for the `MAIN` file path in the Discloud configuration.
 class DiscloudMainValidator extends DiscloudValidator {
+  /// Creates a new instance of [DiscloudMainValidator].
   const DiscloudMainValidator(super.config);
 
   @override

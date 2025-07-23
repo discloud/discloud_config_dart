@@ -1,11 +1,12 @@
-// ignore_for_file: public_member_api_docs
-
 import 'dart:async';
 import 'dart:io';
 
 import 'package:discloud_config/src/discloud_config.dart';
 import 'package:discloud_config/src/extensions/file_system_entity.dart';
 
+/// Lists all `discloud.config` files within a given [directory].
+///
+/// An optional [onError] handler can be provided to manage errors during file listing.
 Stream<File> listDiscloudConfigFiles(
   Directory directory, [
   Function? onError,
@@ -18,6 +19,11 @@ Stream<File> listDiscloudConfigFiles(
   }
 }
 
+/// Finds `discloud.config` files that match a specific [appId].
+///
+/// It searches within the given [directory] and yields a [DiscloudConfig] instance
+/// for each matching file.
+/// An optional [onError] handler can be provided.
 Stream<DiscloudConfig> listDiscloudConfigByAppId(
   Directory directory,
   String appId, [

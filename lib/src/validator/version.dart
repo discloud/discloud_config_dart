@@ -1,12 +1,12 @@
-// ignore_for_file: public_member_api_docs
-
 part of 'validator.dart';
 
+/// A validator for the `VERSION` property in the Discloud configuration.
 class DiscloudVersionValidator extends DiscloudValidator {
   static final _versionPattern = RegExp(
     r"^(current|latest|lts|suja|(?:\d+(?:\.(?:\d+|x)){0,2}))$",
   );
 
+  /// Creates a new instance of [DiscloudVersionValidator].
   const DiscloudVersionValidator(super.config);
 
   @override

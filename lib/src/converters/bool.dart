@@ -1,12 +1,12 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:json_annotation/json_annotation.dart';
 
+/// A [JsonConverter] that converts a `String` or `bool` to a `bool`.
 class TextToBoolConverter extends JsonConverter<bool?, dynamic> {
   static const _false = "false";
   static const _true = "true";
   static const _bools = {_false, _true};
 
+  /// Creates a new instance of [TextToBoolConverter].
   const TextToBoolConverter();
 
   @override

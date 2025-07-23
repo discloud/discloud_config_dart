@@ -1,11 +1,11 @@
-// ignore_for_file: public_member_api_docs
-
 import 'package:json_annotation/json_annotation.dart';
 
+/// A [JsonConverter] that converts a comma-separated string to a list of strings.
 class TextToListConverter extends JsonConverter<List<String>?, dynamic> {
   static final _sepPattern = RegExp(r"\s*,\s*");
   static const _separator = ",";
 
+  /// Creates a new instance of [TextToListConverter].
   const TextToListConverter();
 
   @override

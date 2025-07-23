@@ -2,27 +2,32 @@
 
 import 'package:discloud_config/src/comments/comments.dart';
 
+/// A parser for handling `discloud.config` files.
 class DiscloudConfigParser {
   static final _lineBreakPattern = RegExp(r"[\r\n]+");
   static const _lineBreakSymbol = "\n";
   static const _assignmentSymbol = "=";
 
+  /// Creates a new instance of [DiscloudConfigParser].
   const DiscloudConfigParser({
     required InlineCommentRepository inlineCommentRepository,
   }) : _inlineCommentRepository = inlineCommentRepository;
 
   final InlineCommentRepository _inlineCommentRepository;
 
+  /// Parses the content of a configuration file as a string.
   Map<String, dynamic> parseContent<T>(String content) {
     final lines = content.split(_lineBreakPattern);
     return parseLines(lines);
   }
 
+  /// Parses a list of lines from a configuration file.
   Map<String, dynamic> parseLines<T>(List<String> lines) {
     final parsed = Map<String, dynamic>.fromEntries(_parseLines(lines));
     return parsed;
   }
 
+  /// Converts a map of configuration data into a string.
   String stringify(Map<String, dynamic> data) {
     final List<String> lines = [];
 

@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs
-
 part of 'validator.dart';
 
+/// A validator for the `RAM` property in the Discloud configuration.
 class DiscloudRamValidator extends DiscloudValidator {
+  /// Creates a new instance of [DiscloudRamValidator].
   const DiscloudRamValidator(super.config);
 
   @override

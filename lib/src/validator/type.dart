@@ -1,8 +1,8 @@
-// ignore_for_file: public_member_api_docs
-
 part of 'validator.dart';
 
+/// A validator for the `TYPE` property in the Discloud configuration.
 class DiscloudTypeValidator extends DiscloudValidator {
+  /// Creates a new instance of [DiscloudTypeValidator].
   const DiscloudTypeValidator(super.config);
 
   @override
