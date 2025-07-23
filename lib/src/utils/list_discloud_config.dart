@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:discloud_config/src/discloud_config.dart';
 import 'package:discloud_config/src/extensions/file_system_entity.dart';
+import 'package:discloud_config/src/utils/file_list_search.dart';
 
 /// Lists all `discloud.config` files within a given [directory].
 ///
@@ -10,13 +11,9 @@ import 'package:discloud_config/src/extensions/file_system_entity.dart';
 Stream<File> listDiscloudConfigFiles(
   Directory directory, [
   Function? onError,
-]) async* {
-  await for (final entity
-      in directory.list(recursive: true).handleError(onError ?? (_) => null)) {
-    if (entity is! File || entity.basename != DiscloudConfig.filename) continue;
-
-    yield entity;
-  }
+]) {
+  return fileListSearch(
+      directory, (file) => file.basename != DiscloudConfig.filename, onError);
 }
 
 /// Finds `discloud.config` files that match a specific [appId].
