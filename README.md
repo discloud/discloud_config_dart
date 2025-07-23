@@ -3,7 +3,9 @@
 [![pub package](https://img.shields.io/pub/v/discloud_config.svg)][package_config]
 [![package publisher](https://img.shields.io/pub/publisher/discloud_config.svg)][package_config_publisher]
 
-A configuration file handler to use with Discloud host
+## Overview
+
+This package provides a comprehensive set of tools for managing `discloud.config` files. It allows you to read, write, and validate your Discloud configurations with ease. The package is designed to be used in Dart applications that interact with the Discloud hosting service.
 
 ## Useful links
 
@@ -26,7 +28,7 @@ dart pub add discloud_config
 ### Import
 
 ```dart
-import 'package:discloud_config/discloud_config.dart
+import 'package:discloud_config/discloud_config.dart';
 ```
 
 ### Make an instance
@@ -139,6 +141,10 @@ Run all of our unit tests:
 ```sh
 dart test
 ```
+
+## License
+
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
 
 [analysis_options]: analysis_options.yaml
 [dependencies]: https://dart.dev/tools/pub/dependencies
