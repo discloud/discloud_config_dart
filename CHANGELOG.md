@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.4
+
+- **Documentation & Structure Enhancements:** We've made the documentation clearer and improved the organization of configuration-related classes.
+- **Improved Error Handling:** Better error management and a more streamlined process for listing configuration files.
+- **Discord Link Fixed:** The Discord invite link in the README has been corrected.
+
 ## 1.0.3
 
 - Avoid parsing empty config file contents at instance start
