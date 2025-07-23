@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.5
+
+- **New Utility:** Added a new utility file for searching files.
+
 ## 1.0.4
 
 - **Documentation & Structure Enhancements:** We've made the documentation clearer and improved the organization of configuration-related classes.
