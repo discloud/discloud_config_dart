@@ -1,5 +1,7 @@
 import 'dart:io';
 
+void _noop(Object _, StackTrace __) {}
+
 /// Recursively lists files in a directory and its subdirectories,
 /// filtering them based on a test function.
 ///
@@ -13,7 +15,7 @@ Stream<File> fileListSearch(
   bool Function(File file) where, [
   Function? onError,
 ]) async* {
-  onError ??= (_) => null;
+  onError ??= _noop;
 
   await for (final e in directory.list(recursive: true).handleError(onError)) {
     if (e is File && where(e)) yield e;

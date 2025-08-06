@@ -19,6 +19,12 @@ extension FileSystemEntityExtension on FileSystemEntity {
   /// The path without its extension.
   String get withoutExtension => p.withoutExtension(path);
 
+  /// The extension of the file.
+  String getExtension([int level = 1]) => p.extension(path, level);
+
+  /// Joins the given path parts into a single path using the current platform's [separator].
+  String joinAll(Iterable<String> parts) => p.joinAll([path, ...parts]);
+
   /// Returns the relative path from this entity to the given [path].
   String relative(String path) => p.relative(path, from: this.path);
 }

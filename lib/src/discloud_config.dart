@@ -25,13 +25,17 @@ class DiscloudConfig {
   ) async {
     if (entity is File && entity.basename != filename) entity = entity.parent;
 
-    if (entity is! File) entity = File(p.join(entity.path, filename));
+    if (entity is! File) {
+      final parts = [entity.path, filename];
+      final path = p.joinAll(parts);
+      entity = File(path);
+    }
 
-    if (!await entity.exists()) return DiscloudConfig(entity, const []);
+    final config = DiscloudConfig(entity, const []);
 
-    final List<String> lines = await entity.readAsLines();
+    await config.refresh();
 
-    return DiscloudConfig(entity, lines);
+    return config;
   }
 
   /// Creates a [DiscloudConfig] instance asynchronously from a file path string.
@@ -54,19 +58,21 @@ class DiscloudConfig {
   ///
   /// The [lines] argument receives a list of lines from the configuration file contents.
   DiscloudConfig(File file, [List<String>? lines]) {
-    if (lines == null) {
-      if (file.basename != filename) {
-        final filePath = p.join(file.parent.path, filename);
-        file = File(filePath);
-      }
-
-      if (file.existsSync()) lines = file.readAsLinesSync();
+    if (file.basename != filename) {
+      final filePath = p.joinAll([file.parent.path, filename]);
+      file = File(filePath);
     }
 
     // ignore: prefer_initializing_formals
     this.file = file;
 
-    if (lines == null || lines.isEmpty) return;
+    if (lines == null) {
+      if (!file.existsSync()) return;
+
+      lines = file.readAsLinesSync();
+    }
+
+    if (lines.isEmpty) return;
 
     final rawData = _configParser.parseLines(lines);
     _rawData.addAll(rawData);
@@ -75,7 +81,7 @@ class DiscloudConfig {
   /// The configuration file.
   late final File file;
 
-  late final _inlineCommentRepository = InlineCommentRepository();
+  final _inlineCommentRepository = InlineCommentRepository();
   late final _configParser = DiscloudConfigParser(
     inlineCommentRepository: _inlineCommentRepository,
   );
@@ -94,7 +100,7 @@ class DiscloudConfig {
   File? get main {
     if (_rawData[DiscloudScope.MAIN.name] case final String path) {
       if (path.isEmpty) return null;
-      return File(p.join(file.parent.path, path));
+      return File(p.joinAll([file.parent.path, path]));
     }
     return null;
   }
@@ -110,6 +116,26 @@ class DiscloudConfig {
   Future<void> delete() async {
     if (!await file.exists()) return;
     await file.delete();
+  }
+
+  /// Reloads the configuration from the file.
+  ///
+  /// Returns `true` if the file was successfully reloaded,
+  /// or `false` if the file does not exist.
+  Future<bool> refresh() async {
+    if (!await file.exists()) return false;
+
+    final lines = await file.readAsLines();
+
+    final rawData = _configParser.parseLines(lines);
+
+    _rawData
+      ..clear()
+      ..addAll(rawData);
+
+    _data = null;
+
+    return true;
   }
 
   /// Sets a dynamic value for a given [DiscloudScope] and writes it to the file.
@@ -141,17 +167,7 @@ class DiscloudConfig {
   /// It emits [DiscloudConfigData] on all changes but does not emit on deletion or move.
   Stream<DiscloudConfigData> watch() async* {
     await for (final event in file.watch()) {
-      if (event.isDelete || !await file.exists()) break;
-
-      final lines = await file.readAsLines();
-
-      final rawData = _configParser.parseLines(lines);
-
-      _rawData
-        ..clear()
-        ..addAll(rawData);
-
-      _data = null;
+      if (event.isDelete || !await refresh()) break;
 
       yield data;
     }
