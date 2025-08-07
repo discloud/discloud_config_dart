@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.6
+
+- **Improved Reliability:** We've enhanced how the configuration file paths are handled, making it more reliable across different operating systems.
+- **New Refresh Feature:** You can now reload your `discloud.config` file on the fly using the new `refresh()` method, ensuring your application always has the latest settings.
+- **Better Performance:** The file watching process is now more efficient.
+
 ## 1.0.5
 
 - **New Utility:** Added a new utility file for searching files.
