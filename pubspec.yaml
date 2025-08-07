@@ -1,6 +1,6 @@
 name: discloud_config
 description: "A configuration file handler to use with Discloud host"
-version: 1.0.6
+version: 1.0.7
 
 documentation: https://docs.discloudbot.com/discloud.config
 homepage: https://discloud.com

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.7
+
+- **Smarter Parsing:** We've made improvements to how the configuration files are read and parsed, making it more efficient and flexible.
+- **Optimized Comment Handling:** The way we manage inline comments has been optimized for better performance.
+- **Enhanced Documentation:** The documentation for various parts of the library has been significantly improved for better clarity and detail.
+
 ## 1.0.6
 
 - **Improved Reliability:** We've enhanced how the configuration file paths are handled, making it more reliable across different operating systems.
