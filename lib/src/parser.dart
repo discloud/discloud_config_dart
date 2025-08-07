@@ -28,7 +28,7 @@ class DiscloudConfigParser {
   /// The [content] is split into lines and then parsed by [parseLines].
   /// This is useful when you have the entire file content as a single string.
   Map<String, dynamic> parseContent<T>(String content) {
-    final lines = const LineSplitter().convert(content);
+    final lines = LineSplitter.split(content);
     return parseLines(lines);
   }
 
