@@ -74,9 +74,7 @@ class InlineCommentRepository {
   }
 
   /// An iterable of all stored comment values.
-  Iterable<InlineCommentEntity> get values sync* {
-    yield* _cache.values;
-  }
+  Iterable<InlineCommentEntity> get values => _cache.values;
 
   /// Retrieves a comment at the specified [line] number using the index operator.
   InlineCommentEntity? operator [](int line) => _cache[line];

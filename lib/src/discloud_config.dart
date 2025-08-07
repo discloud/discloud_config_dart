@@ -11,15 +11,18 @@ import 'package:discloud_config/src/validator/validator.dart';
 import 'package:path/path.dart' as p;
 
 /// Manages the `discloud.config` file, providing methods for reading, writing,
-/// and validating the configuration.
+/// and validating your Discloud configurations.
+///
+/// This class allows you to interact with the configuration file in a simple
+/// and programmatic way, abstracting the file parsing and manipulation.
 class DiscloudConfig {
   /// The name of the configuration file: `discloud.config`.
   static const filename = "discloud.config";
 
   /// Creates a [DiscloudConfig] instance asynchronously from a [FileSystemEntity].
   ///
-  /// If the entity is a file, it will be used directly. If it is a directory,
-  /// the `discloud.config` file will be looked for inside it.
+  /// If the provided [entity] is a file, it will be used directly. If it is a
+  /// directory, this method will look for a `discloud.config` file within it.
   static Future<DiscloudConfig> fromFileSystemEntity(
     FileSystemEntity entity,
   ) async {
@@ -39,6 +42,9 @@ class DiscloudConfig {
   }
 
   /// Creates a [DiscloudConfig] instance asynchronously from a file path string.
+  ///
+  /// This is a convenience method that determines the type of the file system
+  /// entity at the given [path] and calls the appropriate constructor.
   static Future<DiscloudConfig> fromPath(String path) async {
     final entityType = await FileSystemEntity.type(path);
     return await switch (entityType) {
@@ -56,8 +62,9 @@ class DiscloudConfig {
 
   /// Creates a new [DiscloudConfig] instance.
   ///
-  /// The [lines] argument receives a list of lines from the configuration file contents.
-  DiscloudConfig(File file, [List<String>? lines]) {
+  /// The optional [lines] argument can be used to provide the file content
+  /// directly, avoiding a synchronous file read.
+  DiscloudConfig(File file, [Iterable<String>? lines]) {
     if (file.basename != filename) {
       final filePath = p.joinAll([file.parent.path, filename]);
       file = File(filePath);
@@ -89,14 +96,14 @@ class DiscloudConfig {
   final Map<String, dynamic> _rawData = {};
   DiscloudConfigData? _data;
 
-  /// The parsed configuration data.
+  /// The parsed configuration data, available as a [DiscloudConfigData] object.
   DiscloudConfigData get data =>
       _data ??= DiscloudConfigData.fromJson(_rawData);
 
   /// The `ID` property from the configuration file.
   String? get appId => _rawData[DiscloudScope.ID.name];
 
-  /// The `MAIN` property from the configuration file as a [File] object.
+  /// The `MAIN` property from the configuration file, returned as a [File] object.
   File? get main {
     if (_rawData[DiscloudScope.MAIN.name] case final String path) {
       if (path.isEmpty) return null;
@@ -120,8 +127,11 @@ class DiscloudConfig {
 
   /// Reloads the configuration from the file.
   ///
-  /// Returns `true` if the file was successfully reloaded,
-  /// or `false` if the file does not exist.
+  /// This method is useful when the file has been modified by an external
+  /// process and you want to update the configuration in your application.
+  ///
+  /// Returns `true` if the file was successfully reloaded, or `false` if the
+  /// file does not exist.
   Future<bool> refresh() async {
     if (!await file.exists()) return false;
 
@@ -140,7 +150,8 @@ class DiscloudConfig {
 
   /// Sets a dynamic value for a given [DiscloudScope] and writes it to the file.
   ///
-  /// See the [configuration docs](https://docs.discloudbot.com/discloud.config) for more details.
+  /// See the [configuration docs](https://docs.discloudbot.com/discloud.config)
+  /// for more details on the available scopes and values.
   Future<void> set(DiscloudScope key, dynamic value) {
     _rawData[key.name] = value;
     _data = null;
@@ -149,7 +160,8 @@ class DiscloudConfig {
 
   /// Sets the entire configuration data and writes it to the file.
   ///
-  /// See the [configuration docs](https://docs.discloudbot.com/discloud.config) for more details.
+  /// See the [configuration docs](https://docs.discloudbot.com/discloud.config)
+  /// for more details on the available scopes and values.
   Future<void> setData(DiscloudConfigData data) {
     _rawData.addAll(data.toJson());
     _data = null;
@@ -157,14 +169,17 @@ class DiscloudConfig {
   }
 
   /// Validates the configuration against the defined schema.
+  ///
+  /// This method checks if the required properties are present and if their
+  /// values are valid according to the Discloud documentation.
   Future<void> validate() async {
     await DiscloudValidator.validateAll(this);
   }
 
   /// Watches the configuration file for changes.
   ///
-  /// This stream works until the file is deleted or moved.
-  /// It emits [DiscloudConfigData] on all changes but does not emit on deletion or move.
+  /// This stream emits a new [DiscloudConfigData] object whenever the file is
+  /// modified. The stream will close if the file is deleted or moved.
   Stream<DiscloudConfigData> watch() async* {
     await for (final event in file.watch()) {
       if (event.isDelete || !await refresh()) break;
@@ -173,6 +188,7 @@ class DiscloudConfig {
     }
   }
 
+  /// Writes the current configuration to the file.
   Future<void> _write() async {
     final content = _configParser.stringify(data.toJson());
 
