@@ -150,7 +150,7 @@ class DiscloudConfig {
 
   /// Sets a dynamic value for a given [DiscloudScope] and writes it to the file.
   ///
-  /// See the [configuration docs](https://docs.discloudbot.com/discloud.config)
+  /// See the [configuration docs](https://docs.discloud.com/en/configurations/discloud.config)
   /// for more details on the available scopes and values.
   Future<void> set(DiscloudScope key, dynamic value) {
     _rawData[key.name] = value;
@@ -160,7 +160,7 @@ class DiscloudConfig {
 
   /// Sets the entire configuration data and writes it to the file.
   ///
-  /// See the [configuration docs](https://docs.discloudbot.com/discloud.config)
+  /// See the [configuration docs](https://docs.discloud.com/en/configurations/discloud.config)
   /// for more details on the available scopes and values.
   Future<void> setData(DiscloudConfigData data) {
     _rawData.addAll(data.toJson());

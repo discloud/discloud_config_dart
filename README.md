@@ -11,7 +11,7 @@ This package provides a comprehensive set of tools for managing `discloud.config
 
 - [Discloud](https://discloud.com)
 - [Discloud Docs](https://docs.discloud.com)
-- [Discloud Config Docs](https://docs.discloudbot.com/discloud.config)
+- [Discloud Config Docs](https://docs.discloud.com/en/configurations/discloud.config)
 
 [![Discord](https://discord.com/api/guilds/584490943034425391/widget.png?style=banner2)](https://discord.discloudbot.com)
 
