@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.8
+
+- **feat**: add more apts to DiscloudApt enum
+
 ## 1.0.7
 
 - **Smarter Parsing:** We've made improvements to how the configuration files are read and parsed, making it more efficient and flexible.
