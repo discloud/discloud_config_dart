@@ -18,14 +18,28 @@ enum DiscloudApt {
   /// The libgl package for graphics.
   libgl,
 
+  /// Database client utilities.
+  mysql,
+
   /// The OpenSSL toolkit.
   openssl,
 
   /// The Puppeteer browser automation library.
   puppeteer,
 
+  /// Browser automation framework.
+  selenium,
+
+  /// Tesseract OCR is an open-source optical character recognition engine used
+  /// for extracting text from images. It supports multiple languages and can be
+  /// trained for custom recognition.
+  tesseract,
+
   /// A collection of essential build tools.
   tools,
+
+  /// Database connectivity standard.
+  unixodbc,
 }
 
 /// Defines the type of application on Discloud.
