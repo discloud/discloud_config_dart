@@ -46,7 +46,7 @@ extension FileSystemEntityExtension on FileSystemEntity {
   ///
   /// This is a convenient way to build paths without having to worry about
   /// the correct separator.
-  String joinAll(Iterable<String> parts) => p.joinAll([path, ...parts]);
+  String joinAll(Iterable<String> parts) => p.joinAll([path].followedBy(parts));
 
   /// Returns the relative path from this entity to the given [path].
   String relative(String path) => p.relative(path, from: this.path);
