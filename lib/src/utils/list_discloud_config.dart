@@ -13,7 +13,7 @@ Stream<File> listDiscloudConfigFiles(
   Function? onError,
 ]) {
   return fileListSearch(
-      directory, (file) => file.basename != DiscloudConfig.filename, onError);
+      directory, (file) => file.basename == DiscloudConfig.filename, onError);
 }
 
 /// Finds `discloud.config` files that match a specific [appId].
