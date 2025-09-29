@@ -1,8 +1,8 @@
 name: discloud_config
 description: "A configuration file handler to use with Discloud host"
-version: 1.0.8
+version: 1.0.9
 
-documentation: https://docs.discloud.com/en/configurations/discloud.config
+documentation: https://docs.discloud.com/en/discloud.config
 homepage: https://discloud.com
 issue_tracker: https://github.com/discloud/discloud_config_dart/issues
 repository: https://github.com/discloud/discloud_config_dart

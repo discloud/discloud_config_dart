@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.9
+
+- **fix**: Correct filter in `listDiscloudConfigFiles`
+
 ## 1.0.8
 
 - **feat**: add more apts to DiscloudApt enum
