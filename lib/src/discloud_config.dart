@@ -176,9 +176,12 @@ class DiscloudConfig {
   ///
   /// This stream emits a new [DiscloudConfigData] object whenever the file is
   /// modified. The stream will close if the file is deleted or moved.
-  Stream<DiscloudConfigData> watch() async* {
+  Stream<DiscloudConfigData?> watch() async* {
     await for (final event in file.watch()) {
-      if (event.isDelete || !await refresh()) break;
+      if (event.isDelete || !await refresh()) {
+        yield null;
+        continue;
+      }
 
       yield data;
     }
