@@ -1,7 +1,7 @@
 import "dart:io";
 
 /// A no-operation function that can be used as a default error handler.
-void _noop(Object _, StackTrace __) {}
+void _noop(Object _, StackTrace _) {}
 
 /// Recursively lists files in a directory and its subdirectories, filtering
 /// them based on a test function.
