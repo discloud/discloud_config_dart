@@ -10,11 +10,15 @@ Future<void> writeFile(File file, String contents) {
   return file.writeAsString(contents, flush: true);
 }
 
-void main() {
-  final file = File(join(Directory.current.path, "discloud.config"));
+void main() async {
+  final root = Directory.current;
+  final tempDir = await root.createTemp("test-");
+  final file = File(joinAll([tempDir.path, "discloud.config"]));
   final random = Random();
 
   t.group("Validator", () {
+    t.tearDownAll(() => tempDir.delete(recursive: true));
+
     t.group("AVATAR", () {
       t.test("Null", () async {
         final config = await DiscloudConfig.fromFileSystemEntity(file);

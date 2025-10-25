@@ -12,7 +12,7 @@ topics:
   - parser
 
 environment:
-  sdk: ^3.0.0
+  sdk: ^3.8.0
 
 dependencies:
   freezed_annotation: ^3.1.0

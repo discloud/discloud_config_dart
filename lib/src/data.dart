@@ -9,10 +9,9 @@ part "data.freezed.dart";
 part "data.g.dart";
 
 /// Represents the data structure for Discloud configuration settings.
-@Freezed(copyWith: true, fromJson: true, toJson: true)
+@Freezed(copyWith: true)
 abstract class DiscloudConfigData with _$DiscloudConfigData {
-  const DiscloudConfigData._();
-
+  @JsonSerializable(includeIfNull: false)
   const factory DiscloudConfigData({
     /// A list of packages to be installed.
     @TextToListConverter() final List<String>? APT,

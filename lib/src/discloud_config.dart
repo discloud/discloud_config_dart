@@ -79,7 +79,8 @@ class DiscloudConfig {
   ///
   /// The optional [lines] argument can be used to provide the file content
   /// directly, avoiding a synchronous file read.
-  factory DiscloudConfig(File file) => DiscloudConfig._withLines(file, []);
+  factory DiscloudConfig(File file) =>
+      DiscloudConfig._withLines(file, const []);
 
   /// The configuration file.
   late final File file;
