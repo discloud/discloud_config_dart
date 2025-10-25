@@ -1,6 +1,6 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:discloud_config/src/comments/comments.dart';
+import "package:discloud_config/src/comments/comments.dart";
 
 /// A parser for handling `discloud.config` files.
 ///

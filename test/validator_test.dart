@@ -1,39 +1,51 @@
-import 'dart:io';
-import 'dart:math';
+import "dart:io";
+import "dart:math";
 
-import 'package:discloud_config/src/discloud_config.dart';
-import 'package:discloud_config/src/validator/validator.dart';
-import 'package:path/path.dart';
-import 'package:test/test.dart' as t;
+import "package:discloud_config/src/discloud_config.dart";
+import "package:discloud_config/src/validator/validator.dart";
+import "package:path/path.dart";
+import "package:test/test.dart" as t;
 
-void main() {
-  final file = File(join(Directory.current.path, "discloud.config"));
+Future<void> writeFile(File file, String contents) {
+  return file.writeAsString(contents, flush: true);
+}
+
+void main() async {
+  final root = Directory.current;
+  final tempDir = await root.createTemp("test-");
+  final file = File(joinAll([tempDir.path, "discloud.config"]));
   final random = Random();
 
   t.group("Validator", () {
+    t.tearDownAll(() => tempDir.delete(recursive: true));
+
     t.group("AVATAR", () {
-      t.test('Null', () {
-        final config = DiscloudConfig(file, const []);
+      t.test("Null", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.AVATAR, null);
 
         DiscloudAvatarValidator(config).validate();
       });
 
-      t.test('Empty', () {
+      t.test("Empty", () async {
         const value = "";
 
-        final config = DiscloudConfig(file, const ["AVATAR="]);
+        await writeFile(file, "AVATAR=");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.AVATAR, value);
 
         DiscloudAvatarValidator(config).validate();
       });
 
-      t.test('Invalid', () {
+      t.test("Invalid", () async {
         const value = "::Not valid URI::";
 
-        final config = DiscloudConfig(file, const ["AVATAR=$value"]);
+        await writeFile(file, "AVATAR=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.AVATAR, value);
 
@@ -45,8 +57,8 @@ void main() {
     });
 
     t.group("MAIN", () {
-      t.test('Null', () {
-        final config = DiscloudConfig(file, const []);
+      t.test("Null", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.MAIN, null);
         t.expect(config.main, null);
@@ -57,10 +69,12 @@ void main() {
         );
       });
 
-      t.test('Empty (Null)', () {
+      t.test("Empty (Null)", () async {
         const value = "";
 
-        final config = DiscloudConfig(file, const ["MAIN="]);
+        await writeFile(file, "MAIN=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.MAIN, value);
         t.expect(config.main, null);
@@ -71,10 +85,12 @@ void main() {
         );
       });
 
-      t.test('Not found', () {
+      t.test("Not found", () async {
         final value = "${random.nextDouble()}";
 
-        final config = DiscloudConfig(file, ["MAIN=$value"]);
+        await writeFile(file, "MAIN=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.MAIN, value);
         t.expect(config.main, t.isA<File>());
@@ -87,28 +103,32 @@ void main() {
     });
 
     t.group("NAME", () {
-      t.test('Null', () {
-        final config = DiscloudConfig(file, const []);
+      t.test("Null", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.NAME, null);
 
         DiscloudNameValidator(config).validate();
       });
 
-      t.test('Empty', () {
+      t.test("Empty", () async {
         const value = "";
 
-        final config = DiscloudConfig(file, const ["NAME="]);
+        await writeFile(file, "NAME=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.NAME, value);
 
         DiscloudNameValidator(config).validate();
       });
 
-      t.test('Invalid range', () {
+      t.test("Invalid range", () async {
         const value = "1234567890 1234567890 1234567890"; // length `32`
 
-        final config = DiscloudConfig(file, const ["NAME=$value"]);
+        await writeFile(file, "NAME=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.NAME, value);
 
@@ -120,26 +140,28 @@ void main() {
     });
 
     t.group("RAM", () {
-      t.test('Null', () {
-        final config = DiscloudConfig(file, const []);
+      t.test("Null", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.RAM, null);
 
         DiscloudRamValidator(config).validate();
       });
 
-      t.test('Empty', () {
-        final config = DiscloudConfig(file, const ["RAM="]);
+      t.test("Empty", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.RAM, null);
 
         DiscloudRamValidator(config).validate();
       });
 
-      t.test('Invalid range', () {
+      t.test("Invalid range", () async {
         const value = 0;
 
-        final config = DiscloudConfig(file, const ["RAM=$value"]);
+        await writeFile(file, "RAM=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.RAM, value);
 
@@ -151,28 +173,32 @@ void main() {
     });
 
     t.group("TYPE", () {
-      t.test('Null', () {
-        final config = DiscloudConfig(file, const []);
+      t.test("Null", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.TYPE, null);
 
         DiscloudTypeValidator(config).validate();
       });
 
-      t.test('Empty', () {
+      t.test("Empty", () async {
         const value = "";
 
-        final config = DiscloudConfig(file, const ["TYPE="]);
+        await writeFile(file, "TYPE=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.TYPE, value);
 
         DiscloudTypeValidator(config).validate();
       });
 
-      t.test('Invalid', () {
+      t.test("Invalid", () async {
         const value = "_";
 
-        final config = DiscloudConfig(file, const ["TYPE=$value"]);
+        await writeFile(file, "TYPE=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.TYPE, value);
 
@@ -184,28 +210,32 @@ void main() {
     });
 
     t.group("VERSION", () {
-      t.test('Null', () {
-        final config = DiscloudConfig(file, const []);
+      t.test("Null", () async {
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, null);
 
         DiscloudVersionValidator(config).validate();
       });
 
-      t.test('Empty', () {
+      t.test("Empty", () async {
         const value = "";
 
-        final config = DiscloudConfig(file, const ["VERSION="]);
+        await writeFile(file, "VERSION=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, value);
 
         DiscloudVersionValidator(config).validate();
       });
 
-      t.test('Invalid', () {
+      t.test("Invalid", () async {
         const value = "_";
 
-        final config = DiscloudConfig(file, const ["VERSION=$value"]);
+        await writeFile(file, "VERSION=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, value);
 
@@ -215,40 +245,48 @@ void main() {
         );
       });
 
-      t.test('Valid semver (0)', () {
+      t.test("Valid semver (0)", () async {
         const value = "0";
 
-        final config = DiscloudConfig(file, const ["VERSION=$value"]);
+        await writeFile(file, "VERSION=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, value);
 
         DiscloudVersionValidator(config).validate();
       });
 
-      t.test('Valid semver (0.0)', () {
+      t.test("Valid semver (0.0)", () async {
         const value = "0.0";
 
-        final config = DiscloudConfig(file, const ["VERSION=$value"]);
+        await writeFile(file, "VERSION=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, value);
 
         DiscloudVersionValidator(config).validate();
       });
 
-      t.test('Valid semver (0.0.0)', () {
+      t.test("Valid semver (0.0.0)", () async {
         const value = "0.0.0";
 
-        final config = DiscloudConfig(file, const ["VERSION=$value"]);
+        await writeFile(file, "VERSION=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, value);
 
         DiscloudVersionValidator(config).validate();
       });
 
-      t.test('Invalid semver (0.0.0.0)', () {
+      t.test("Invalid semver (0.0.0.0)", () async {
         const value = "0.0.0.0";
 
-        final config = DiscloudConfig(file, const ["VERSION=$value"]);
+        await writeFile(file, "VERSION=$value");
+
+        final config = await DiscloudConfig.fromFileSystemEntity(file);
 
         t.expect(config.data.VERSION, value);
 

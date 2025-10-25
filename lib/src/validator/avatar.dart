@@ -1,4 +1,4 @@
-part of 'validator.dart';
+part of "validator.dart";
 
 /// A validator for the avatar URL in the Discloud configuration.
 class DiscloudAvatarValidator extends DiscloudValidator {

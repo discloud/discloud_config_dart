@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+import "package:json_annotation/json_annotation.dart";
 
 /// A [JsonConverter] that converts a `String` or `int` to an `int`.
 class TextToIntConverter extends JsonConverter<int?, dynamic> {

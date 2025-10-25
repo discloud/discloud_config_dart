@@ -1,24 +1,35 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:discloud_config/discloud_config.dart';
-import 'package:test/test.dart' as t;
+import "package:discloud_config/discloud_config.dart";
+import "package:test/test.dart" as t;
 
 void main() {
-  t.test("Discloud Config", () async {
-    final directory = Directory.current;
+  t.group("Discloud Config", () {
+    final root = Directory.current;
 
-    final config = await DiscloudConfig.fromFileSystemEntity(directory);
+    t.test("Data handler", () async {
+      final tempDir = await root.createTemp("test-");
+      t.addTearDown(() => tempDir.delete(recursive: true));
 
-    await config.setData(const DiscloudConfigData());
+      final config = await DiscloudConfig.fromFileSystemEntity(tempDir);
 
-    assert(config.data.toJson().isEmpty);
+      await config.setData(const DiscloudConfigData());
 
-    await config.set(DiscloudScope.AUTORESTART, true);
+      final json = config.data.toJson();
 
-    t.expect(config.data.AUTORESTART, true);
+      assert(
+        json.isEmpty,
+        "Config data has ${json.length} items, "
+        "expected empty",
+      );
 
-    await config.delete();
+      await config.set(DiscloudScope.AUTORESTART, true);
 
-    t.expect(await config.file.exists(), false);
+      t.expect(config.data.AUTORESTART, true);
+
+      await config.delete();
+
+      t.expect(await config.file.exists(), false);
+    });
   });
 }

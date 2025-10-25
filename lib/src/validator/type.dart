@@ -1,4 +1,4 @@
-part of 'validator.dart';
+part of "validator.dart";
 
 /// A validator for the `TYPE` property in the Discloud configuration.
 class DiscloudTypeValidator extends DiscloudValidator {

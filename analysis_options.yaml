@@ -15,13 +15,58 @@ include: package:lints/recommended.yaml
 
 # Uncomment the following section to specify additional rules.
 
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+  exclude:
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+    - lib/generated/**
+
 linter:
   rules:
-    - prefer_const_constructors
+    
+    # avoid memory leak
+    - cancel_subscriptions
+    - close_sinks
+    
+    # with auto fixes
+    - always_declare_return_types
+    - always_put_required_named_parameters_first
+    - annotate_redeclares
+    - avoid_escaping_inner_quotes
+    - avoid_null_checks_in_equality_operators
+    - avoid_redundant_argument_values
+    - cascade_invocations
+    - combinators_ordering
+    - directives_ordering
+    - eol_at_end_of_file
+    - no_literal_bool_comparisons
+    - noop_primitive_operations
     - prefer_const_constructors_in_immutables
     - prefer_const_declarations
-    - prefer_const_literals_to_create_immutables
-    - public_member_api_docs
+    - prefer_contains
+    - prefer_double_quotes
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_int_literals
+    - require_trailing_commas
+    - unawaited_futures
+    - unnecessary_await_in_return
+    - unnecessary_ignore
+    - unnecessary_lambdas
+    - unnecessary_parenthesis
+    - unnecessary_raw_strings
+    - unnecessary_unawaited
+    - use_colored_box
+    - use_decorated_box
+    - use_enums
+    - use_if_null_to_convert_nulls_to_bools
+    - use_named_constants
+    - use_null_aware_elements
+    - use_raw_strings
+    - use_truncating_division
 #     - camel_case_types
 
 # analyzer:

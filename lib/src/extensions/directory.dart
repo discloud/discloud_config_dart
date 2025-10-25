@@ -1,5 +1,5 @@
-import 'dart:io';
-import 'dart:isolate';
+import "dart:io";
+import "dart:isolate";
 
 /// An extension on the [Directory] class.
 extension DirectoryExtension on Directory {

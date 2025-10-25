@@ -6,8 +6,8 @@ part of 'data.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DiscloudConfigData _$DiscloudConfigDataFromJson(Map<String, dynamic> json) =>
-    DiscloudConfigData(
+_DiscloudConfigData _$DiscloudConfigDataFromJson(Map<String, dynamic> json) =>
+    _DiscloudConfigData(
       APT: const TextToListConverter().fromJson(json['APT']),
       AUTORESTART: const TextToBoolConverter().fromJson(json['AUTORESTART']),
       AVATAR: json['AVATAR'] as String?,
@@ -23,24 +23,19 @@ DiscloudConfigData _$DiscloudConfigDataFromJson(Map<String, dynamic> json) =>
       VLAN: const TextToBoolConverter().fromJson(json['VLAN']),
     );
 
-Map<String, dynamic> _$DiscloudConfigDataToJson(DiscloudConfigData instance) =>
+Map<String, dynamic> _$DiscloudConfigDataToJson(_DiscloudConfigData instance) =>
     <String, dynamic>{
-      if (const TextToListConverter().toJson(instance.APT) case final value?)
-        'APT': value,
-      if (const TextToBoolConverter().toJson(instance.AUTORESTART)
-          case final value?)
-        'AUTORESTART': value,
-      if (instance.AVATAR case final value?) 'AVATAR': value,
-      if (instance.HOSTNAME case final value?) 'HOSTNAME': value,
-      if (instance.ID case final value?) 'ID': value,
-      if (instance.MAIN case final value?) 'MAIN': value,
-      if (instance.NAME case final value?) 'NAME': value,
-      if (const TextToIntConverter().toJson(instance.RAM) case final value?)
-        'RAM': value,
-      if (instance.START case final value?) 'START': value,
-      if (instance.STORAGE case final value?) 'STORAGE': value,
-      if (instance.TYPE case final value?) 'TYPE': value,
-      if (instance.VERSION case final value?) 'VERSION': value,
-      if (const TextToBoolConverter().toJson(instance.VLAN) case final value?)
-        'VLAN': value,
+      'APT': ?const TextToListConverter().toJson(instance.APT),
+      'AUTORESTART': ?const TextToBoolConverter().toJson(instance.AUTORESTART),
+      'AVATAR': ?instance.AVATAR,
+      'HOSTNAME': ?instance.HOSTNAME,
+      'ID': ?instance.ID,
+      'MAIN': ?instance.MAIN,
+      'NAME': ?instance.NAME,
+      'RAM': ?const TextToIntConverter().toJson(instance.RAM),
+      'START': ?instance.START,
+      'STORAGE': ?instance.STORAGE,
+      'TYPE': ?instance.TYPE,
+      'VERSION': ?instance.VERSION,
+      'VLAN': ?const TextToBoolConverter().toJson(instance.VLAN),
     };

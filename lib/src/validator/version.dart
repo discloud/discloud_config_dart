@@ -1,4 +1,4 @@
-part of 'validator.dart';
+part of "validator.dart";
 
 /// A validator for the `VERSION` property in the Discloud configuration.
 class DiscloudVersionValidator extends DiscloudValidator {
