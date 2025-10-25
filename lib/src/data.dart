@@ -11,6 +11,7 @@ part "data.g.dart";
 /// Represents the data structure for Discloud configuration settings.
 @Freezed(copyWith: true)
 abstract class DiscloudConfigData with _$DiscloudConfigData {
+  // ignore: invalid_annotation_target
   @JsonSerializable(includeIfNull: false)
   const factory DiscloudConfigData({
     /// A list of packages to be installed.
