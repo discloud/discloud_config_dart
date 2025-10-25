@@ -15,6 +15,32 @@ import "package:path/path.dart" as p;
 ///
 /// This class allows you to interact with the configuration file in a simple
 /// and programmatic way, abstracting the file parsing and manipulation.
+///
+/// ### Example
+/// ```dart
+/// import 'dart:io';
+/// import 'package:discloud_config/discloud_config.dart';
+///
+/// void main() async {
+///   // Create a DiscloudConfig instance from a directory path.
+///   final config = await DiscloudConfig.fromPath('path/to/your/project');
+///
+///   // Create the file if it doesn't exist.
+///   await config.create();
+///
+///   // Set some configuration values.
+///   await config.set(DiscloudScope.RAM, 1024);
+///   await config.set(DiscloudScope.AUTORESTART, true);
+///
+///   // Access the configuration data.
+///   print('RAM: ${config.data.RAM}'); // Output: RAM: 1024
+///
+///   // Watch for file changes.
+///   config.watch().listen((data) {
+///     print('Config file changed!');
+///   });
+/// }
+/// ```
 class DiscloudConfig {
   /// The name of the configuration file: `discloud.config`.
   static const filename = "discloud.config";
@@ -23,6 +49,11 @@ class DiscloudConfig {
   ///
   /// If the provided [entity] is a file, it will be used directly. If it is a
   /// directory, this method will look for a `discloud.config` file within it.
+  ///
+  /// **Note:** This method does not create the file upon instantiation.
+  /// However, the file will be created automatically if you set a property
+  /// using [set] or [setData]. Alternatively, you can call [create] to create
+  /// it manually.
   static Future<DiscloudConfig> fromFileSystemEntity(
     FileSystemEntity entity,
   ) async {
@@ -44,7 +75,12 @@ class DiscloudConfig {
   /// Creates a [DiscloudConfig] instance asynchronously from a file path string.
   ///
   /// This is a convenience method that determines the type of the file system
-  /// entity at the given [path] and calls the appropriate constructor.
+  /// entity at the given [path] and calls [fromFileSystemEntity].
+  ///
+  /// **Note:** This method does not create the file upon instantiation.
+  /// However, the file will be created automatically if you set a property
+  /// using [set] or [setData]. Alternatively, you can call [create] to create
+  /// it manually.
   static Future<DiscloudConfig> fromPath(String path) async {
     final entityType = await FileSystemEntity.type(path);
     return switch (entityType) {
@@ -56,6 +92,14 @@ class DiscloudConfig {
   }
 
   /// Creates a [DiscloudConfig] instance asynchronously from a [Uri].
+  ///
+  /// This is a convenience method that converts [Uri] to [path]
+  /// and calls [fromPath].
+  ///
+  /// **Note:** This method does not create the file upon instantiation.
+  /// However, the file will be created automatically if you set a property
+  /// using [set] or [setData]. Alternatively, you can call [create] to create
+  /// it manually.
   static Future<DiscloudConfig> fromUri(Uri uri) {
     return fromPath(uri.toFilePath());
   }
@@ -75,10 +119,12 @@ class DiscloudConfig {
     _rawData.addAll(rawData);
   }
 
-  /// Creates a new [DiscloudConfig] instance.
+  /// Creates a new [DiscloudConfig] instance from a [File] object.
   ///
-  /// The optional [lines] argument can be used to provide the file content
-  /// directly, avoiding a synchronous file read.
+  /// **Note:** This factory only creates the instance and does not read the
+  /// file from the disk. You must call [refresh] after instantiation to load the
+  /// configuration data. For a more convenient approach, use the static
+  /// `fromPath` or `fromFileSystemEntity` methods.
   factory DiscloudConfig(File file) =>
       DiscloudConfig._withLines(file, const []);
 
@@ -93,7 +139,10 @@ class DiscloudConfig {
   final Map<String, dynamic> _rawData = {};
   DiscloudConfigData? _data;
 
-  /// The parsed configuration data, available as a [DiscloudConfigData] object.
+  /// The parsed configuration data as a [DiscloudConfigData] object.
+  ///
+  /// The data is cached for performance. It is only re-parsed when the
+  /// configuration is modified programmatically or when [refresh] is called.
   DiscloudConfigData get data =>
       _data ??= DiscloudConfigData.fromJson(_rawData);
 
@@ -146,6 +195,11 @@ class DiscloudConfig {
   }
 
   /// Sets a dynamic value for a given [DiscloudScope] and writes it to the file.
+  ///
+  /// ### Example
+  /// ```dart
+  /// await config.set(DiscloudScope.RAM, 512);
+  /// ```
   ///
   /// See the [configuration docs](https://docs.discloud.com/en/configurations/discloud.config)
   /// for more details on the available scopes and values.

@@ -7,22 +7,30 @@ extension FileExtension on File {
   /// Deletes the file in a separate isolate to avoid blocking the main thread.
   Future<FileSystemEntity> isolateDelete() => Isolate.run(delete);
 
+  /// Atomically writes the given [bytes] to the file.
+  ///
+  /// This is done by first writing to a temporary file and then renaming it to
+  /// the original path. This ensures that the file is never left in a partially
+  /// written state.
   Future<File> writeAsBytesAtomically(List<int> bytes) async {
     final temp = File("${path}_${DateTime.now().millisecondsSinceEpoch}");
     try {
       await temp.writeAsBytes(bytes, flush: true);
       await temp.rename(path);
-    } on FileSystemException {
+    } catch (_) {
       try {
         await temp.delete();
-      } on FileSystemException {
-        // ignored
-      }
+      } catch (_) {}
       rethrow;
     }
     return this;
   }
 
+  /// Atomically writes the given [contents] to the file.
+  ///
+  /// This is done by first writing to a temporary file and then renaming it to
+  /// the original path. This ensures that the file is never left in a partially
+  /// written state.
   Future<File> writeAsStringAtomically(
     String contents, {
     Encoding encoding = utf8,
