@@ -30,17 +30,17 @@ void main() async {
   // 3. Read the configuration data
   print("\nReading configuration data:");
 
-  print("ID: ${config.data.ID}");
-  print("RAM: ${config.data.RAM}");
-  print("AUTORESTART: ${config.data.AUTORESTART}");
-  print("TYPE: ${config.data.TYPE}");
+  print("ID: ${config.data.ID}"); // "my-awesome-app-id"
+  print("RAM: ${config.data.RAM}"); // 512
+  print("AUTORESTART: ${config.data.AUTORESTART}"); // true
+  print("TYPE: ${config.data.TYPE}"); // "bot"
 
   // 4. Modify an existing data entry
   print("\nModifying RAM to 1024...");
 
   await config.set(DiscloudScope.RAM, 1024);
 
-  print("New RAM: ${config.data.RAM}");
+  print("New RAM: ${config.data.RAM}"); // 1024
 
   // 5. Delete the configuration file (optional)
   print("\nDeleting the discloud.config file...");
