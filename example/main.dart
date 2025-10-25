@@ -8,8 +8,9 @@ void main() async {
   // We use the system's temporary directory to avoid creating files in your project.
   const filename = "discloud.config";
 
-  final tempDir =
-      await Directory.systemTemp.createTemp("discloud_config_example");
+  final tempDir = await Directory.systemTemp.createTemp(
+    "discloud_config_example",
+  );
 
   final configFilePath = joinAll([tempDir.path, filename]);
 

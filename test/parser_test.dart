@@ -5,8 +5,9 @@ import "package:test/test.dart" as t;
 void main() {
   t.test("Testing Parser", () {
     final inlineCommentRepository = InlineCommentRepository();
-    final parser =
-        DiscloudConfigParser(inlineCommentRepository: inlineCommentRepository);
+    final parser = DiscloudConfigParser(
+      inlineCommentRepository: inlineCommentRepository,
+    );
 
     const lines = ["# first comment", "ID=test # second comment", "MAIN=main"];
 

@@ -8,10 +8,7 @@ import "package:discloud_config/src/utils/file_list_search.dart";
 /// Lists all `discloud.config` files within a given [directory].
 ///
 /// An optional [onError] handler can be provided to manage errors during file listing.
-Stream<File> listDiscloudConfigFiles(
-  Directory directory, [
-  Function? onError,
-]) {
+Stream<File> listDiscloudConfigFiles(Directory directory, [Function? onError]) {
   return fileListSearch(
     directory,
     (file) => file.basename == DiscloudConfig.filename,
