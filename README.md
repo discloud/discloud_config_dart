@@ -56,11 +56,10 @@ await DiscloudConfig.fromUri(Uri);
 ### Watch configuration file
 
 - `DiscloudConfigData` is read-only, see [`Updating DiscloudConfigData`](#updating-discloudconfigdata)
-- It works until the file is `moved` or `deleted`
 
 ```dart
-// Stream<DiscloudConfigData>
-await for (final DiscloudConfigData data in config.watch()) {
+// Stream<DiscloudConfigData?>
+await for (final DiscloudConfigData? data in config.watch()) {
   // ...
 }
 ```
@@ -75,7 +74,7 @@ DiscloudConfigData.fromJson(Map<String, dynamic>);
 
 ```dart
 // Use copyWith
-final DiscloudConfigData newData = oldData.copyWith(TYPE: "bot");
+final DiscloudConfigData newData = oldData.copyWith(TYPE: DiscloudAppType.bot.name/*"bot"*/);
 ```
 
 ### List all configuration files recursively
