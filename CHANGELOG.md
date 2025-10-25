@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2.0.0
+
+### BREAKING CHANGES
+
+- **`DiscloudConfig` Constructor**: The public constructor that allowed passing file content (`lines`) has been removed to enforce a more robust, non-blocking asynchronous pattern. Instantiation now relies on factories and an asynchronous `refresh()` method.
+- **`watch()` Method Return Type**: The `watch()` method now returns a `Stream<DiscloudConfigData?>` (a stream that can contain nulls) instead of `Stream<DiscloudConfigData>` to handle cases where the file is deleted or a read error occurs.
+- **`DiscloudConfigData` Refactoring**: The `DiscloudConfigData` class is now an immutable class managed by `freezed`. This changes the object's fundamental structure and requires using the new `.copyWith()` method for updates.
+
+### Features
+
+- **Improved Linting**: Added new linting rules for better code quality and consistency.
+- **`freezed` Integration**: `DiscloudConfigData` now uses the `freezed` package, providing immutability and helper methods like `copyWith`.
+
+### Fixes
+
+- **Asynchronous Initialization**: Replaced synchronous file I/O in constructors with a fully asynchronous pattern to prevent blocking.
+
 ## 1.0.9
 
 - **fix**: Correct filter in `listDiscloudConfigFiles`
