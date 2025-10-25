@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs
-
-part of 'comments.dart';
+part of "comments.dart";
 
 /// Represents an inline comment in the configuration file.
 @JsonSerializable()
@@ -33,7 +31,7 @@ class InlineCommentEntity {
 
   @override
   // ignore: hash_and_equals
-  operator ==(other) {
+  bool operator ==(other) {
     if (other is String) return other == content;
     if (other is InlineCommentEntity) return other.content == content;
     return other.hashCode == hashCode;

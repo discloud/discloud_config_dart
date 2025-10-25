@@ -1,4 +1,4 @@
-import 'dart:io';
+import "dart:io";
 
 /// An extension on the [FileSystemEvent] class to simplify event type checking.
 extension FileSystemEventExtension on FileSystemEvent {

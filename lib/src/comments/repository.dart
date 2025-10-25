@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs
-
-part of 'comments.dart';
+part of "comments.dart";
 
 /// A repository for managing inline comments within the configuration file.
 class InlineCommentRepository {

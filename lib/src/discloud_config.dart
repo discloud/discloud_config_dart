@@ -1,14 +1,14 @@
-import 'dart:async';
-import 'dart:io';
+import "dart:async";
+import "dart:io";
 
-import 'package:discloud_config/src/comments/comments.dart';
-import 'package:discloud_config/src/data.dart';
-import 'package:discloud_config/src/extensions/file_system_entity.dart';
-import 'package:discloud_config/src/extensions/file_system_event.dart';
-import 'package:discloud_config/src/parser.dart';
-import 'package:discloud_config/src/scopes.dart';
-import 'package:discloud_config/src/validator/validator.dart';
-import 'package:path/path.dart' as p;
+import "package:discloud_config/src/comments/comments.dart";
+import "package:discloud_config/src/data.dart";
+import "package:discloud_config/src/extensions/file_system_entity.dart";
+import "package:discloud_config/src/extensions/file_system_event.dart";
+import "package:discloud_config/src/parser.dart";
+import "package:discloud_config/src/scopes.dart";
+import "package:discloud_config/src/validator/validator.dart";
+import "package:path/path.dart" as p;
 
 /// Manages the `discloud.config` file, providing methods for reading, writing,
 /// and validating your Discloud configurations.
@@ -34,7 +34,7 @@ class DiscloudConfig {
       entity = File(path);
     }
 
-    final config = DiscloudConfig(entity, const []);
+    final config = DiscloudConfig._withLines(entity, []);
 
     await config.refresh();
 
@@ -47,7 +47,7 @@ class DiscloudConfig {
   /// entity at the given [path] and calls the appropriate constructor.
   static Future<DiscloudConfig> fromPath(String path) async {
     final entityType = await FileSystemEntity.type(path);
-    return await switch (entityType) {
+    return switch (entityType) {
       FileSystemEntityType.directory => fromFileSystemEntity(Directory(path)),
       FileSystemEntityType.file => fromFileSystemEntity(File(path)),
       FileSystemEntityType.notFound => fromFileSystemEntity(File(path).parent),
@@ -60,11 +60,7 @@ class DiscloudConfig {
     return fromPath(uri.toFilePath());
   }
 
-  /// Creates a new [DiscloudConfig] instance.
-  ///
-  /// The optional [lines] argument can be used to provide the file content
-  /// directly, avoiding a synchronous file read.
-  DiscloudConfig(File file, [Iterable<String>? lines]) {
+  DiscloudConfig._withLines(File file, Iterable<String> lines) {
     if (file.basename != filename) {
       final filePath = p.joinAll([file.parent.path, filename]);
       file = File(filePath);
@@ -73,17 +69,17 @@ class DiscloudConfig {
     // ignore: prefer_initializing_formals
     this.file = file;
 
-    if (lines == null) {
-      if (!file.existsSync()) return;
-
-      lines = file.readAsLinesSync();
-    }
-
     if (lines.isEmpty) return;
 
     final rawData = _configParser.parseLines(lines);
     _rawData.addAll(rawData);
   }
+
+  /// Creates a new [DiscloudConfig] instance.
+  ///
+  /// The optional [lines] argument can be used to provide the file content
+  /// directly, avoiding a synchronous file read.
+  factory DiscloudConfig(File file) => DiscloudConfig._withLines(file, []);
 
   /// The configuration file.
   late final File file;

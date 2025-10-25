@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+import "package:json_annotation/json_annotation.dart";
 
 /// A [JsonConverter] that converts a comma-separated string to a list of strings.
 class TextToListConverter extends JsonConverter<List<String>?, dynamic> {

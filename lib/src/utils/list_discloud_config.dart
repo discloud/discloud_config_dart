@@ -1,9 +1,9 @@
-import 'dart:async';
-import 'dart:io';
+import "dart:async";
+import "dart:io";
 
-import 'package:discloud_config/src/discloud_config.dart';
-import 'package:discloud_config/src/extensions/file_system_entity.dart';
-import 'package:discloud_config/src/utils/file_list_search.dart';
+import "package:discloud_config/src/discloud_config.dart";
+import "package:discloud_config/src/extensions/file_system_entity.dart";
+import "package:discloud_config/src/utils/file_list_search.dart";
 
 /// Lists all `discloud.config` files within a given [directory].
 ///
@@ -13,7 +13,10 @@ Stream<File> listDiscloudConfigFiles(
   Function? onError,
 ]) {
   return fileListSearch(
-      directory, (file) => file.basename == DiscloudConfig.filename, onError);
+    directory,
+    (file) => file.basename == DiscloudConfig.filename,
+    onError,
+  );
 }
 
 /// Finds `discloud.config` files that match a specific [appId].
@@ -27,9 +30,7 @@ Stream<DiscloudConfig> listDiscloudConfigByAppId(
   Function? onError,
 ]) async* {
   await for (final file in listDiscloudConfigFiles(directory, onError)) {
-    final lines = await file.readAsLines();
-
-    final config = DiscloudConfig(file, lines);
+    final config = await DiscloudConfig.fromFileSystemEntity(file);
 
     if (config.appId == appId) yield config;
   }

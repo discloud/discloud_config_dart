@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names, public_member_api_docs
+// ignore_for_file: constant_identifier_names
 
 /// Defines the available scopes for Discloud configuration.
 enum DiscloudScope {

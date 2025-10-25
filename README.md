@@ -74,14 +74,8 @@ DiscloudConfigData.fromJson(Map<String, dynamic>);
 ### Updating DiscloudConfigData
 
 ```dart
-// Convert to raw data
-final Map<String, dynamic> oldRawData = oldData.toJson();
-
-// Update raw data
-oldRawData["TYPE"] = "bot";
-
-// Convert to data
-final newData = DiscloudConfigData.fromJson(oldRawData);
+// Use copyWith
+final DiscloudConfigData newData = oldData.copyWith(TYPE: "bot");
 ```
 
 ### List all configuration files recursively

@@ -1,4 +1,4 @@
-part of 'validator.dart';
+part of "validator.dart";
 
 /// A validator for the `MAIN` file path in the Discloud configuration.
 class DiscloudMainValidator extends DiscloudValidator {

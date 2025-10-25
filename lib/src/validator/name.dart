@@ -1,4 +1,4 @@
-part of 'validator.dart';
+part of "validator.dart";
 
 /// A validator for the `NAME` property in the Discloud configuration.
 class DiscloudNameValidator extends DiscloudValidator {

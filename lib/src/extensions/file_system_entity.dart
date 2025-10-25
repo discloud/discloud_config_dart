@@ -1,6 +1,6 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:path/path.dart' as p;
+import "package:path/path.dart" as p;
 
 /// An extension on the [FileSystemEntity] class that provides additional
 /// path-related properties and methods.

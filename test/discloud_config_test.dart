@@ -1,7 +1,7 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:discloud_config/discloud_config.dart';
-import 'package:test/test.dart' as t;
+import "package:discloud_config/discloud_config.dart";
+import "package:test/test.dart" as t;
 
 void main() {
   t.test("Discloud Config", () async {

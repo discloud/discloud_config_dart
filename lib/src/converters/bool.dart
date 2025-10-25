@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+import "package:json_annotation/json_annotation.dart";
 
 /// A [JsonConverter] that converts a `String` or `bool` to a `bool`.
 class TextToBoolConverter extends JsonConverter<bool?, dynamic> {

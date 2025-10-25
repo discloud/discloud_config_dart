@@ -1,8 +1,8 @@
-import 'package:discloud_config/src/comments/comments.dart';
-import 'package:test/test.dart' as t;
+import "package:discloud_config/src/comments/comments.dart";
+import "package:test/test.dart" as t;
 
 void main() {
-  t.test('Testing InlineCommentRepository', () {
+  t.test("Testing InlineCommentRepository", () {
     final inlineCommentRepository = InlineCommentRepository();
 
     const rawLines = ["# first comment", "ID=test # second comment"];
