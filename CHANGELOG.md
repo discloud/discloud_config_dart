@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.0.0+1
+
+### Minor changes
+
+- Update README.md
+- Fix lint issues and format code
+
 ## 2.0.0
 
 ### BREAKING CHANGES
