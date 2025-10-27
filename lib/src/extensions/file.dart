@@ -13,11 +13,11 @@ extension FileExtension on File {
   /// the original path. This ensures that the file is never left in a partially
   /// written state.
   Future<File> writeAsBytesAtomically(List<int> bytes) async {
-    final temp = File("${path}_${DateTime.now().millisecondsSinceEpoch}");
+    final temp = File("${path}_${DateTime.now().microsecondsSinceEpoch}");
+    await temp.writeAsBytes(bytes, flush: true);
     try {
-      await temp.writeAsBytes(bytes, flush: true);
       await temp.rename(path);
-    } catch (_) {
+    } catch (e) {
       try {
         await temp.delete();
       } catch (_) {}
@@ -35,9 +35,9 @@ extension FileExtension on File {
     String contents, {
     Encoding encoding = utf8,
   }) async {
-    final temp = File("${path}_${DateTime.now().millisecondsSinceEpoch}");
+    final temp = File("${path}_${DateTime.now().microsecondsSinceEpoch}");
+    await temp.writeAsString(contents, encoding: encoding, flush: true);
     try {
-      await temp.writeAsString(contents, encoding: encoding, flush: true);
       await temp.rename(path);
     } catch (_) {
       try {
