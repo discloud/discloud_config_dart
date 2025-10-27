@@ -1,7 +1,8 @@
 import "package:json_annotation/json_annotation.dart";
 
 /// A [JsonConverter] that converts a comma-separated string to a iterable of strings.
-class TextToIterableConverter extends JsonConverter<Iterable<String>?, dynamic> {
+class TextToIterableConverter
+    extends JsonConverter<Iterable<String>?, dynamic> {
   static final _sepPattern = RegExp(r"\s*,\s*");
   static const _separator = ",";
 
@@ -16,9 +17,7 @@ class TextToIterableConverter extends JsonConverter<Iterable<String>?, dynamic> 
 
     if (json is! String) return null;
 
-    return json
-        .split(_sepPattern)
-        .where((element) => element.isNotEmpty);
+    return json.split(_sepPattern).where((element) => element.isNotEmpty);
   }
 
   @override
