@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.1.0
+
+- `DiscloudConfigData` extension created
+- `DiscloudConfigData.APT` now uses `Iterable` instead `List` converter
+
 ## 2.0.1
 
 - Fix config file watching
