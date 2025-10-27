@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.1
+
+- Fix config file watching
+
 ## 2.0.0+1
 
 ### Minor changes
