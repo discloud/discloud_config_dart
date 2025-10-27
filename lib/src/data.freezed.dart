@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$DiscloudConfigData {
 
 /// A list of packages to be installed.
-@TextToListConverter() List<String>? get APT;/// Whether the application should automatically restart.
+@TextToIterableConverter() Iterable<String>? get APT;/// Whether the application should automatically restart.
 @TextToBoolConverter() bool? get AUTORESTART;/// The URL of the application's avatar.
  String? get AVATAR;/// The hostname of the application.
  String? get HOSTNAME;/// The ID of the application.
@@ -61,7 +61,7 @@ abstract mixin class $DiscloudConfigDataCopyWith<$Res>  {
   factory $DiscloudConfigDataCopyWith(DiscloudConfigData value, $Res Function(DiscloudConfigData) _then) = _$DiscloudConfigDataCopyWithImpl;
 @useResult
 $Res call({
-@TextToListConverter() List<String>? APT,@TextToBoolConverter() bool? AUTORESTART, String? AVATAR, String? HOSTNAME, String? ID, String? MAIN, String? NAME,@TextToIntConverter() int? RAM, String? START, String? STORAGE, String? TYPE, String? VERSION,@TextToBoolConverter() bool? VLAN
+@TextToIterableConverter() Iterable<String>? APT,@TextToBoolConverter() bool? AUTORESTART, String? AVATAR, String? HOSTNAME, String? ID, String? MAIN, String? NAME,@TextToIntConverter() int? RAM, String? START, String? STORAGE, String? TYPE, String? VERSION,@TextToBoolConverter() bool? VLAN
 });
 
 
@@ -81,7 +81,7 @@ class _$DiscloudConfigDataCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? APT = freezed,Object? AUTORESTART = freezed,Object? AVATAR = freezed,Object? HOSTNAME = freezed,Object? ID = freezed,Object? MAIN = freezed,Object? NAME = freezed,Object? RAM = freezed,Object? START = freezed,Object? STORAGE = freezed,Object? TYPE = freezed,Object? VERSION = freezed,Object? VLAN = freezed,}) {
   return _then(_self.copyWith(
 APT: freezed == APT ? _self.APT : APT // ignore: cast_nullable_to_non_nullable
-as List<String>?,AUTORESTART: freezed == AUTORESTART ? _self.AUTORESTART : AUTORESTART // ignore: cast_nullable_to_non_nullable
+as Iterable<String>?,AUTORESTART: freezed == AUTORESTART ? _self.AUTORESTART : AUTORESTART // ignore: cast_nullable_to_non_nullable
 as bool?,AVATAR: freezed == AVATAR ? _self.AVATAR : AVATAR // ignore: cast_nullable_to_non_nullable
 as String?,HOSTNAME: freezed == HOSTNAME ? _self.HOSTNAME : HOSTNAME // ignore: cast_nullable_to_non_nullable
 as String?,ID: freezed == ID ? _self.ID : ID // ignore: cast_nullable_to_non_nullable
@@ -178,7 +178,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@TextToListConverter()  List<String>? APT, @TextToBoolConverter()  bool? AUTORESTART,  String? AVATAR,  String? HOSTNAME,  String? ID,  String? MAIN,  String? NAME, @TextToIntConverter()  int? RAM,  String? START,  String? STORAGE,  String? TYPE,  String? VERSION, @TextToBoolConverter()  bool? VLAN)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@TextToIterableConverter()  Iterable<String>? APT, @TextToBoolConverter()  bool? AUTORESTART,  String? AVATAR,  String? HOSTNAME,  String? ID,  String? MAIN,  String? NAME, @TextToIntConverter()  int? RAM,  String? START,  String? STORAGE,  String? TYPE,  String? VERSION, @TextToBoolConverter()  bool? VLAN)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DiscloudConfigData() when $default != null:
 return $default(_that.APT,_that.AUTORESTART,_that.AVATAR,_that.HOSTNAME,_that.ID,_that.MAIN,_that.NAME,_that.RAM,_that.START,_that.STORAGE,_that.TYPE,_that.VERSION,_that.VLAN);case _:
@@ -199,7 +199,7 @@ return $default(_that.APT,_that.AUTORESTART,_that.AVATAR,_that.HOSTNAME,_that.ID
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@TextToListConverter()  List<String>? APT, @TextToBoolConverter()  bool? AUTORESTART,  String? AVATAR,  String? HOSTNAME,  String? ID,  String? MAIN,  String? NAME, @TextToIntConverter()  int? RAM,  String? START,  String? STORAGE,  String? TYPE,  String? VERSION, @TextToBoolConverter()  bool? VLAN)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@TextToIterableConverter()  Iterable<String>? APT, @TextToBoolConverter()  bool? AUTORESTART,  String? AVATAR,  String? HOSTNAME,  String? ID,  String? MAIN,  String? NAME, @TextToIntConverter()  int? RAM,  String? START,  String? STORAGE,  String? TYPE,  String? VERSION, @TextToBoolConverter()  bool? VLAN)  $default,) {final _that = this;
 switch (_that) {
 case _DiscloudConfigData():
 return $default(_that.APT,_that.AUTORESTART,_that.AVATAR,_that.HOSTNAME,_that.ID,_that.MAIN,_that.NAME,_that.RAM,_that.START,_that.STORAGE,_that.TYPE,_that.VERSION,_that.VLAN);case _:
@@ -219,7 +219,7 @@ return $default(_that.APT,_that.AUTORESTART,_that.AVATAR,_that.HOSTNAME,_that.ID
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@TextToListConverter()  List<String>? APT, @TextToBoolConverter()  bool? AUTORESTART,  String? AVATAR,  String? HOSTNAME,  String? ID,  String? MAIN,  String? NAME, @TextToIntConverter()  int? RAM,  String? START,  String? STORAGE,  String? TYPE,  String? VERSION, @TextToBoolConverter()  bool? VLAN)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@TextToIterableConverter()  Iterable<String>? APT, @TextToBoolConverter()  bool? AUTORESTART,  String? AVATAR,  String? HOSTNAME,  String? ID,  String? MAIN,  String? NAME, @TextToIntConverter()  int? RAM,  String? START,  String? STORAGE,  String? TYPE,  String? VERSION, @TextToBoolConverter()  bool? VLAN)?  $default,) {final _that = this;
 switch (_that) {
 case _DiscloudConfigData() when $default != null:
 return $default(_that.APT,_that.AUTORESTART,_that.AVATAR,_that.HOSTNAME,_that.ID,_that.MAIN,_that.NAME,_that.RAM,_that.START,_that.STORAGE,_that.TYPE,_that.VERSION,_that.VLAN);case _:
@@ -234,20 +234,11 @@ return $default(_that.APT,_that.AUTORESTART,_that.AVATAR,_that.HOSTNAME,_that.ID
 
 @JsonSerializable(includeIfNull: false)
 class _DiscloudConfigData implements DiscloudConfigData {
-  const _DiscloudConfigData({@TextToListConverter() final  List<String>? APT, @TextToBoolConverter() this.AUTORESTART, this.AVATAR, this.HOSTNAME, this.ID, this.MAIN, this.NAME, @TextToIntConverter() this.RAM, this.START, this.STORAGE, this.TYPE, this.VERSION, @TextToBoolConverter() this.VLAN}): _APT = APT;
+  const _DiscloudConfigData({@TextToIterableConverter() this.APT, @TextToBoolConverter() this.AUTORESTART, this.AVATAR, this.HOSTNAME, this.ID, this.MAIN, this.NAME, @TextToIntConverter() this.RAM, this.START, this.STORAGE, this.TYPE, this.VERSION, @TextToBoolConverter() this.VLAN});
   factory _DiscloudConfigData.fromJson(Map<String, dynamic> json) => _$DiscloudConfigDataFromJson(json);
 
 /// A list of packages to be installed.
- final  List<String>? _APT;
-/// A list of packages to be installed.
-@override@TextToListConverter() List<String>? get APT {
-  final value = _APT;
-  if (value == null) return null;
-  if (_APT is EqualUnmodifiableListView) return _APT;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
-}
-
+@override@TextToIterableConverter() final  Iterable<String>? APT;
 /// Whether the application should automatically restart.
 @override@TextToBoolConverter() final  bool? AUTORESTART;
 /// The URL of the application's avatar.
@@ -286,12 +277,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DiscloudConfigData&&const DeepCollectionEquality().equals(other._APT, _APT)&&(identical(other.AUTORESTART, AUTORESTART) || other.AUTORESTART == AUTORESTART)&&(identical(other.AVATAR, AVATAR) || other.AVATAR == AVATAR)&&(identical(other.HOSTNAME, HOSTNAME) || other.HOSTNAME == HOSTNAME)&&(identical(other.ID, ID) || other.ID == ID)&&(identical(other.MAIN, MAIN) || other.MAIN == MAIN)&&(identical(other.NAME, NAME) || other.NAME == NAME)&&(identical(other.RAM, RAM) || other.RAM == RAM)&&(identical(other.START, START) || other.START == START)&&(identical(other.STORAGE, STORAGE) || other.STORAGE == STORAGE)&&(identical(other.TYPE, TYPE) || other.TYPE == TYPE)&&(identical(other.VERSION, VERSION) || other.VERSION == VERSION)&&(identical(other.VLAN, VLAN) || other.VLAN == VLAN));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DiscloudConfigData&&const DeepCollectionEquality().equals(other.APT, APT)&&(identical(other.AUTORESTART, AUTORESTART) || other.AUTORESTART == AUTORESTART)&&(identical(other.AVATAR, AVATAR) || other.AVATAR == AVATAR)&&(identical(other.HOSTNAME, HOSTNAME) || other.HOSTNAME == HOSTNAME)&&(identical(other.ID, ID) || other.ID == ID)&&(identical(other.MAIN, MAIN) || other.MAIN == MAIN)&&(identical(other.NAME, NAME) || other.NAME == NAME)&&(identical(other.RAM, RAM) || other.RAM == RAM)&&(identical(other.START, START) || other.START == START)&&(identical(other.STORAGE, STORAGE) || other.STORAGE == STORAGE)&&(identical(other.TYPE, TYPE) || other.TYPE == TYPE)&&(identical(other.VERSION, VERSION) || other.VERSION == VERSION)&&(identical(other.VLAN, VLAN) || other.VLAN == VLAN));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_APT),AUTORESTART,AVATAR,HOSTNAME,ID,MAIN,NAME,RAM,START,STORAGE,TYPE,VERSION,VLAN);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(APT),AUTORESTART,AVATAR,HOSTNAME,ID,MAIN,NAME,RAM,START,STORAGE,TYPE,VERSION,VLAN);
 
 @override
 String toString() {
@@ -306,7 +297,7 @@ abstract mixin class _$DiscloudConfigDataCopyWith<$Res> implements $DiscloudConf
   factory _$DiscloudConfigDataCopyWith(_DiscloudConfigData value, $Res Function(_DiscloudConfigData) _then) = __$DiscloudConfigDataCopyWithImpl;
 @override @useResult
 $Res call({
-@TextToListConverter() List<String>? APT,@TextToBoolConverter() bool? AUTORESTART, String? AVATAR, String? HOSTNAME, String? ID, String? MAIN, String? NAME,@TextToIntConverter() int? RAM, String? START, String? STORAGE, String? TYPE, String? VERSION,@TextToBoolConverter() bool? VLAN
+@TextToIterableConverter() Iterable<String>? APT,@TextToBoolConverter() bool? AUTORESTART, String? AVATAR, String? HOSTNAME, String? ID, String? MAIN, String? NAME,@TextToIntConverter() int? RAM, String? START, String? STORAGE, String? TYPE, String? VERSION,@TextToBoolConverter() bool? VLAN
 });
 
 
@@ -325,8 +316,8 @@ class __$DiscloudConfigDataCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? APT = freezed,Object? AUTORESTART = freezed,Object? AVATAR = freezed,Object? HOSTNAME = freezed,Object? ID = freezed,Object? MAIN = freezed,Object? NAME = freezed,Object? RAM = freezed,Object? START = freezed,Object? STORAGE = freezed,Object? TYPE = freezed,Object? VERSION = freezed,Object? VLAN = freezed,}) {
   return _then(_DiscloudConfigData(
-APT: freezed == APT ? _self._APT : APT // ignore: cast_nullable_to_non_nullable
-as List<String>?,AUTORESTART: freezed == AUTORESTART ? _self.AUTORESTART : AUTORESTART // ignore: cast_nullable_to_non_nullable
+APT: freezed == APT ? _self.APT : APT // ignore: cast_nullable_to_non_nullable
+as Iterable<String>?,AUTORESTART: freezed == AUTORESTART ? _self.AUTORESTART : AUTORESTART // ignore: cast_nullable_to_non_nullable
 as bool?,AVATAR: freezed == AVATAR ? _self.AVATAR : AVATAR // ignore: cast_nullable_to_non_nullable
 as String?,HOSTNAME: freezed == HOSTNAME ? _self.HOSTNAME : HOSTNAME // ignore: cast_nullable_to_non_nullable
 as String?,ID: freezed == ID ? _self.ID : ID // ignore: cast_nullable_to_non_nullable

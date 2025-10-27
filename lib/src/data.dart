@@ -2,7 +2,7 @@
 
 import "package:discloud_config/src/converters/bool.dart";
 import "package:discloud_config/src/converters/int.dart";
-import "package:discloud_config/src/converters/list.dart";
+import "package:discloud_config/src/converters/iterable.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
 
 part "data.freezed.dart";
@@ -15,7 +15,7 @@ abstract class DiscloudConfigData with _$DiscloudConfigData {
   @JsonSerializable(includeIfNull: false)
   const factory DiscloudConfigData({
     /// A list of packages to be installed.
-    @TextToListConverter() final List<String>? APT,
+    @TextToIterableConverter() final Iterable<String>? APT,
 
     /// Whether the application should automatically restart.
     @TextToBoolConverter() final bool? AUTORESTART,
