@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.2.0
+
+- Feat: option to disable autosave added
+- Fix: ensure recursive creation of configuration file and improve file event handling
+
 ## 2.1.1
 
 - Fix export of `DiscloudConfigData` extension
