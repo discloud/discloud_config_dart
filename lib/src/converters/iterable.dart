@@ -11,13 +11,11 @@ class TextToIterableConverter
 
   @override
   Iterable<String>? fromJson(dynamic json) {
-    if (json == null) return null;
-
-    if (json is Iterable<String>) return json;
-
-    if (json is! String) return null;
-
-    return json.split(_sepPattern).where((element) => element.isNotEmpty);
+    return switch (json) {
+      final Iterable<String> json => json,
+      final String json => json.split(_sepPattern).where((e) => e.isNotEmpty),
+      _ => null,
+    };
   }
 
   @override

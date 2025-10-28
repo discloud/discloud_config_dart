@@ -11,25 +11,17 @@ class DiscloudRamValidator extends DiscloudValidator {
 
     if (value == null) return;
 
-    final type = config.data.TYPE;
+    final type = config.data.appTYPE;
 
-    final error = RangeError.range(
-      value,
-      DiscloudRamMinByType.bot.value,
-      null,
-      DiscloudScope.RAM.name,
-    );
+    final min = DiscloudRamMinByType.values.byName(type.name);
 
-    if (type == null) {
-      if (value < DiscloudRamMinByType.bot.value) throw error;
-
-      return;
-    }
-
-    for (final min in DiscloudRamMinByType.values) {
-      if (type != min.name) continue;
-
-      if (value < min.value) throw error;
+    if (value < min.value) {
+      throw RangeError.range(
+        value,
+        DiscloudRamMinByType.bot.value,
+        null,
+        DiscloudScope.RAM.name,
+      );
     }
   }
 }

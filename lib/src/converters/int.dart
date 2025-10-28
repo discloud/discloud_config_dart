@@ -7,9 +7,12 @@ class TextToIntConverter extends JsonConverter<int?, dynamic> {
 
   @override
   int? fromJson(dynamic json) {
-    if (json == null) return null;
-    if (json is int) return json;
-    return int.tryParse("$json");
+    return switch (json) {
+      final int json => json,
+      final num json => json.toInt(),
+      final String json => int.tryParse(json),
+      _ => null,
+    };
   }
 
   @override

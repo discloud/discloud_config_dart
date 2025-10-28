@@ -162,7 +162,7 @@ class DiscloudConfig {
   Future<void> create() async {
     if (await file.exists()) return;
     _data = null;
-    await file.create();
+    await file.create(recursive: true);
   }
 
   /// Deletes the configuration file if it exists.
@@ -233,7 +233,7 @@ class DiscloudConfig {
   /// modified. The stream will close if the file is deleted or moved.
   Stream<DiscloudConfigData?> watch() async* {
     await for (final event in file.parent.watch()) {
-      if (event.isDirectory || p.basename(event.path) != filename) continue;
+      if (event.isDirectory || event.basename != filename) continue;
 
       if (event.isDelete || !await refresh()) {
         yield null;

@@ -11,9 +11,11 @@ class TextToBoolConverter extends JsonConverter<bool?, dynamic> {
 
   @override
   bool? fromJson(dynamic json) {
-    if (json is bool) return json;
-    if (_bools.contains(json)) return json == _true;
-    return null;
+    return switch (json) {
+      final bool json => json,
+      final String json => _bools.contains(json) ? json == _true : null,
+      _ => null,
+    };
   }
 
   @override
