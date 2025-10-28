@@ -41,6 +41,18 @@ import "package:path/path.dart" as p;
 ///   });
 /// }
 /// ```
+///
+/// ### Auto-saving
+///
+/// The `autoSave` option in the constructors ([DiscloudConfig.fromPath],
+/// [DiscloudConfig.fromFileSystemEntity], etc.) controls whether changes are
+/// automatically written to the file.
+///
+/// - If `autoSave` is `true` (the default), any call to [set] or [setData] will immediately
+///   save the changes to the `discloud.config` file.
+/// - If `autoSave` is `false`, you must manually call the [save]
+///   method to persist any changes you've made. This can be useful for batching
+///   multiple changes together.
 class DiscloudConfig {
   /// The name of the configuration file: `discloud.config`.
   static const filename = "discloud.config";
@@ -54,9 +66,13 @@ class DiscloudConfig {
   /// However, the file will be created automatically if you set a property
   /// using [set] or [setData]. Alternatively, you can call [create] to create
   /// it manually.
+  ///
+  /// The [autoSave] parameter controls whether changes are automatically saved.
+  /// See the "Auto-saving" section in the class documentation for more details.
   static Future<DiscloudConfig> fromFileSystemEntity(
-    FileSystemEntity entity,
-  ) async {
+    FileSystemEntity entity, {
+    bool autoSave = true,
+  }) async {
     if (entity is File && entity.basename != filename) entity = entity.parent;
 
     if (entity is! File) {
@@ -65,7 +81,7 @@ class DiscloudConfig {
       entity = File(path);
     }
 
-    final config = DiscloudConfig._withLines(entity, []);
+    final config = DiscloudConfig._withLines(entity, [], autoSave: autoSave);
 
     await config.refresh();
 
@@ -81,12 +97,28 @@ class DiscloudConfig {
   /// However, the file will be created automatically if you set a property
   /// using [set] or [setData]. Alternatively, you can call [create] to create
   /// it manually.
-  static Future<DiscloudConfig> fromPath(String path) async {
+  ///
+  /// The [autoSave] parameter controls whether changes are automatically saved.
+  /// See the "Auto-saving" section in the class documentation for more details.
+  static Future<DiscloudConfig> fromPath(
+    String path, {
+    bool autoSave = true,
+  }) async {
     final entityType = await FileSystemEntity.type(path);
+
     return switch (entityType) {
-      FileSystemEntityType.directory => fromFileSystemEntity(Directory(path)),
-      FileSystemEntityType.file => fromFileSystemEntity(File(path)),
-      FileSystemEntityType.notFound => fromFileSystemEntity(File(path).parent),
+      FileSystemEntityType.directory => fromFileSystemEntity(
+        Directory(path),
+        autoSave: autoSave,
+      ),
+      FileSystemEntityType.file => fromFileSystemEntity(
+        File(path),
+        autoSave: autoSave,
+      ),
+      FileSystemEntityType.notFound => fromFileSystemEntity(
+        File(path).parent,
+        autoSave: autoSave,
+      ),
       _ => throw ArgumentError.value(path, "path"),
     };
   }
@@ -100,11 +132,18 @@ class DiscloudConfig {
   /// However, the file will be created automatically if you set a property
   /// using [set] or [setData]. Alternatively, you can call [create] to create
   /// it manually.
-  static Future<DiscloudConfig> fromUri(Uri uri) {
+  ///
+  /// The [autoSave] parameter controls whether changes are automatically saved.
+  /// See the "Auto-saving" section in the class documentation for more details.
+  static Future<DiscloudConfig> fromUri(Uri uri, {bool autoSave = true}) {
     return fromPath(uri.toFilePath());
   }
 
-  DiscloudConfig._withLines(File file, Iterable<String> lines) {
+  DiscloudConfig._withLines(
+    File file,
+    Iterable<String> lines, {
+    this.autoSave = true,
+  }) {
     if (file.basename != filename) {
       final filePath = p.joinAll([file.parent.path, filename]);
       file = File(filePath);
@@ -125,11 +164,19 @@ class DiscloudConfig {
   /// file from the disk. You must call [refresh] after instantiation to load the
   /// configuration data. For a more convenient approach, use the static
   /// `fromPath` or `fromFileSystemEntity` methods.
-  factory DiscloudConfig(File file) =>
-      DiscloudConfig._withLines(file, const []);
+  ///
+  /// The [autoSave] parameter controls whether changes are automatically saved.
+  /// See the "Auto-saving" section in the class documentation for more details.
+  factory DiscloudConfig(File file, {bool autoSave = true}) =>
+      DiscloudConfig._withLines(file, const [], autoSave: autoSave);
 
   /// The configuration file.
   late final File file;
+
+  /// Whether changes are automatically saved to the file.
+  ///
+  /// See the "Auto-saving" section in the class documentation for more details.
+  final bool autoSave;
 
   final _inlineCommentRepository = InlineCommentRepository();
   late final _configParser = DiscloudConfigParser(
@@ -194,6 +241,15 @@ class DiscloudConfig {
     return true;
   }
 
+  /// Saves the current configuration to the file.
+  ///
+  /// This method is only necessary when `autoSave` is `false`.
+  /// It will throw an [AssertionError] if `autoSave` is `true`.
+  Future<void> save() {
+    assert(!autoSave, "Cannot call save() when autoSave is true.");
+    return _write();
+  }
+
   /// Sets a dynamic value for a given [DiscloudScope] and writes it to the file.
   ///
   /// ### Example
@@ -203,20 +259,20 @@ class DiscloudConfig {
   ///
   /// See the [configuration docs](https://docs.discloud.com/en/configurations/discloud.config)
   /// for more details on the available scopes and values.
-  Future<void> set(DiscloudScope key, dynamic value) {
+  Future<void> set(DiscloudScope key, dynamic value) async {
     _rawData[key.name] = value;
     _data = null;
-    return _write();
+    if (autoSave) return _write();
   }
 
   /// Sets the entire configuration data and writes it to the file.
   ///
   /// See the [configuration docs](https://docs.discloud.com/en/configurations/discloud.config)
   /// for more details on the available scopes and values.
-  Future<void> setData(DiscloudConfigData data) {
+  Future<void> setData(DiscloudConfigData data) async {
     _rawData.addAll(data.toJson());
     _data = null;
-    return _write();
+    if (autoSave) return _write();
   }
 
   /// Validates the configuration against the defined schema.

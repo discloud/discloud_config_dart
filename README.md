@@ -33,25 +33,26 @@ import 'package:discloud_config/discloud_config.dart';
 
 ### Make an instance
 
-```dart
-/// the [lines] argument receives a list of lines from the configuration file contents
-DiscloudConfig(File, [List<String>?]);
-```
-
-- It can also be asynchronous
+You can create a `DiscloudConfig` instance in several ways:
 
 ```dart
-// import 'dart:io';
-await DiscloudConfig.fromFileSystemEntity(FileSystemEntity);
+// From a File
+final configFile = File('path/to/your/project/discloud.config');
+final config = DiscloudConfig(configFile);
+
+// From a directory path (asynchronously)
+final configFromPath = await DiscloudConfig.fromPath('path/to/your/project');
+
+// From a FileSystemEntity (asynchronously)
+final directory = Directory('path/to/your/project');
+final configFromEntity = await DiscloudConfig.fromFileSystemEntity(directory);
+
+// From a Uri (asynchronously)
+final uri = Uri.file('path/to/your/project');
+final configFromUri = await DiscloudConfig.fromUri(uri);
 ```
 
-```dart
-await DiscloudConfig.fromPath(String);
-```
-
-```dart
-await DiscloudConfig.fromUri(Uri);
-```
+All constructors accept an optional `autoSave` parameter. See the "Auto-saving" section for more details.
 
 ### Watch configuration file
 
@@ -62,6 +63,27 @@ await DiscloudConfig.fromUri(Uri);
 await for (final DiscloudConfigData? data in config.watch()) {
   // ...
 }
+```
+
+### Auto-saving
+
+The `autoSave` parameter in the constructors (`DiscloudConfig.fromPath`, `DiscloudConfig.fromFileSystemEntity`, etc.) controls whether changes are automatically written to the file.
+
+- If `autoSave` is `true` (the default), any call to `set` or `setData` will immediately save the changes to the `discloud.config` file.
+
+- If `autoSave` is `false`, you must manually call the `save` method to persist any changes you've made. This can be useful for batching multiple changes together.
+
+**Example:**
+
+```dart
+// With autoSave enabled (default)
+final config = await DiscloudConfig.fromPath('path/to/your/project'); // autoSave is true
+await config.set(DiscloudScope.RAM, 1024); // Changes are saved automatically
+
+// With autoSave disabled
+final config2 = await DiscloudConfig.fromPath('path/to/your/project', autoSave: false);
+await config2.set(DiscloudScope.RAM, 2048); // Changes are not saved yet
+await config2.save(); // Manually save the changes
 ```
 
 ### Create a new DiscloudConfigData from JSON
@@ -127,6 +149,7 @@ Ensure all code is formatted with the latest [dev-channel SDK][dev_sdk].
 
 ```sh
 dart format .
+dart fix --apply
 ```
 
 Run all of our unit tests:
