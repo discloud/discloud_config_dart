@@ -55,5 +55,5 @@ abstract class DiscloudConfigData with _$DiscloudConfigData {
   }) = _DiscloudConfigData;
 
   factory DiscloudConfigData.fromJson(Map<String, dynamic> json) =>
-      _$DiscloudConfigDataFromJson(json);
+      _DiscloudConfigData.fromJson(json);
 }

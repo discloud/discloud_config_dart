@@ -20,4 +20,10 @@ extension FileSystemEventExtension on FileSystemEvent {
   ///
   /// For example, for the path `/path/to/file.txt`, the basename is `file.txt`.
   String get basename => p.basename(path);
+
+  /// Converts this [FileSystemEvent] to a [FileSystemEntity].
+  ///
+  /// If [isDirectory] is `true`, a [Directory] is returned; otherwise, a [File] is returned.
+  FileSystemEntity toFileSystemEntity() =>
+      isDirectory ? Directory(path) : File(path);
 }

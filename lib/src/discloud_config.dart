@@ -75,18 +75,40 @@ class DiscloudConfig {
   }) async {
     if (entity is File && entity.basename != filename) entity = entity.parent;
 
-    if (entity is! File) {
-      final parts = [entity.path, filename];
-      final path = p.joinAll(parts);
-      entity = File(path);
-    }
+    if (entity is! File) entity = File(p.joinAll([entity.path, filename]));
 
-    final config = DiscloudConfig._withLines(entity, [], autoSave: autoSave);
+    final repository = InlineCommentRepository();
+
+    final parser = DiscloudConfigParser(inlineCommentRepository: repository);
+
+    final config = DiscloudConfig._withParser(
+      entity,
+      parser,
+      autoSave: autoSave,
+    );
 
     await config.refresh();
 
     return config;
   }
+
+  /// Creates a [DiscloudConfig] instance asynchronously from a [FileSystemEvent].
+  ///
+  /// This is a convenience method that converts the [FileSystemEvent] to a
+  /// [FileSystemEntity] and calls [fromFileSystemEntity].
+  ///
+  /// **Note:** This method does not create the file upon instantiation.
+  /// However, the file will be created automatically if you set a property
+  /// using [set] or [setData]. Alternatively, you can call [create] to create
+  /// it manually.
+  ///
+  /// The [autoSave] parameter controls whether changes are automatically saved.
+  /// See the "Auto-saving" section in the class documentation for more details.
+  static Future<DiscloudConfig> fromFileSystemEvent(
+    FileSystemEvent event, {
+    bool autoSave = true,
+  }) async =>
+      fromFileSystemEntity(event.toFileSystemEntity(), autoSave: autoSave);
 
   /// Creates a [DiscloudConfig] instance asynchronously from a file path string.
   ///
@@ -135,30 +157,13 @@ class DiscloudConfig {
   ///
   /// The [autoSave] parameter controls whether changes are automatically saved.
   /// See the "Auto-saving" section in the class documentation for more details.
-  static Future<DiscloudConfig> fromUri(Uri uri, {bool autoSave = true}) {
-    return fromPath(uri.toFilePath());
-  }
-
-  DiscloudConfig._withLines(
-    File file,
-    Iterable<String> lines, {
-    this.autoSave = true,
-  }) {
-    if (file.basename != filename) {
-      final filePath = p.joinAll([file.parent.path, filename]);
-      file = File(filePath);
-    }
-
-    // ignore: prefer_initializing_formals
-    this.file = file;
-
-    if (lines.isEmpty) return;
-
-    final rawData = _configParser.parseLines(lines);
-    _rawData.addAll(rawData);
-  }
+  static Future<DiscloudConfig> fromUri(Uri uri, {bool autoSave = true}) =>
+      fromPath(uri.toFilePath());
 
   /// Creates a new [DiscloudConfig] instance from a [File] object.
+  ///
+  /// This factory creates a [DiscloudConfig] instance with a default
+  /// [InlineCommentRepository] and [DiscloudConfigParser].
   ///
   /// **Note:** This factory only creates the instance and does not read the
   /// file from the disk. You must call [refresh] after instantiation to load the
@@ -168,20 +173,40 @@ class DiscloudConfig {
   /// The [autoSave] parameter controls whether changes are automatically saved.
   /// See the "Auto-saving" section in the class documentation for more details.
   factory DiscloudConfig(File file, {bool autoSave = true}) =>
-      DiscloudConfig._withLines(file, const [], autoSave: autoSave);
+      DiscloudConfig._withInlineCommentRepository(
+        file,
+        InlineCommentRepository(),
+        autoSave: autoSave,
+      );
 
-  /// The configuration file.
-  late final File file;
+  /// Creates a [DiscloudConfig] instance with a custom [InlineCommentRepository].
+  DiscloudConfig._withInlineCommentRepository(
+    this.file,
+    InlineCommentRepository inlineCommentRepository, {
+    this.autoSave = true,
+  }) : _parser = DiscloudConfigParser(
+         inlineCommentRepository: inlineCommentRepository,
+       );
+
+  /// Creates a [DiscloudConfig] instance with a custom [DiscloudConfigParser].
+  ///
+  /// This constructor is used internally to inject a pre-configured parser.
+  DiscloudConfig._withParser(
+    this.file,
+    DiscloudConfigParser parser, {
+    this.autoSave = true,
+  }) : _parser = parser;
+
+  /// The configuration file managed by this instance.
+  final File file;
 
   /// Whether changes are automatically saved to the file.
   ///
   /// See the "Auto-saving" section in the class documentation for more details.
   final bool autoSave;
 
-  final _inlineCommentRepository = InlineCommentRepository();
-  late final _configParser = DiscloudConfigParser(
-    inlineCommentRepository: _inlineCommentRepository,
-  );
+  /// The parser used to read and write the configuration file.
+  final DiscloudConfigParser _parser;
 
   final Map<String, dynamic> _rawData = {};
   DiscloudConfigData? _data;
@@ -194,13 +219,13 @@ class DiscloudConfig {
       _data ??= DiscloudConfigData.fromJson(_rawData);
 
   /// The `ID` property from the configuration file.
-  String? get appId => _rawData[DiscloudScope.ID.name];
+  String? get appId => data.ID;
 
   /// The `MAIN` property from the configuration file, returned as a [File] object.
   File? get main {
-    if (_rawData[DiscloudScope.MAIN.name] case final String path) {
-      if (path.isEmpty) return null;
-      return File(p.joinAll([file.parent.path, path]));
+    if (data.MAIN case final String mainPath) {
+      if (mainPath.isEmpty) return null;
+      return File(p.joinAll([file.parent.path, mainPath]));
     }
     return null;
   }
@@ -228,9 +253,9 @@ class DiscloudConfig {
   Future<bool> refresh() async {
     if (!await file.exists()) return false;
 
-    final lines = await file.readAsLines();
+    final content = await file.readAsString();
 
-    final rawData = _configParser.parseLines(lines);
+    final rawData = _parser.parseContent(content);
 
     _rawData
       ..clear()
@@ -243,10 +268,8 @@ class DiscloudConfig {
 
   /// Saves the current configuration to the file.
   ///
-  /// This method is only necessary when `autoSave` is `false`.
-  /// It will throw an [AssertionError] if `autoSave` is `true`.
+  /// This method is only necessary when [autoSave] is `false`.
   Future<void> save() {
-    assert(!autoSave, "Cannot call save() when autoSave is true.");
     return _write();
   }
 
@@ -302,7 +325,7 @@ class DiscloudConfig {
 
   /// Writes the current configuration to the file.
   Future<void> _write() async {
-    final content = _configParser.stringify(data.toJson());
+    final content = _parser.stringify(data.toJson());
 
     await file.writeAsString(content, flush: true);
   }
