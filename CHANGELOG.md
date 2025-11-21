@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.3.0
+
+- **Refactor**: Decoupled `DiscloudConfig` from `DiscloudConfigParser`, now the parser is passed as a dependency.
+- **Feat**: Added `DiscloudConfig.fromFileSystemEvent` to create a `DiscloudConfig` from a `FileSystemEvent`.
+- **Feat**: Added `toFileSystemEntity()` extension for `FileSystemEvent`.
+- **Fix**: Removed `json_serializable` and manual parsing of `DiscloudConfigData`.
+- **Fix**: The `save` method no longer has an assertion against `autoSave`.
+
 ## 2.2.0
 
 - Feat: option to disable autosave added
