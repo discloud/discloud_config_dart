@@ -107,8 +107,7 @@ class DiscloudConfig {
   static Future<DiscloudConfig> fromFileSystemEvent(
     FileSystemEvent event, {
     bool autoSave = true,
-  }) async =>
-      fromFileSystemEntity(event.toFileSystemEntity(), autoSave: autoSave);
+  }) => fromFileSystemEntity(event.toFileSystemEntity(), autoSave: autoSave);
 
   /// Creates a [DiscloudConfig] instance asynchronously from a file path string.
   ///
