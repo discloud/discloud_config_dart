@@ -27,7 +27,7 @@ class DiscloudConfigParser {
   ///
   /// The [content] is split into lines and then parsed by [parseLines].
   /// This is useful when you have the entire file content as a single string.
-  Map<String, dynamic> parseContent<T>(String content) {
+  Map<String, String> parseContent<T>(String content) {
     final lines = LineSplitter.split(content);
     return parseLines(lines);
   }
@@ -36,8 +36,8 @@ class DiscloudConfigParser {
   ///
   /// Each line is parsed into a key-value pair. Blank lines and comments are
   /// ignored. This method is ideal for processing a file line by line.
-  Map<String, dynamic> parseLines<T>(Iterable<String> lines) {
-    final parsed = Map<String, dynamic>.fromEntries(_parseLines(lines));
+  Map<String, String> parseLines<T>(Iterable<String> lines) {
+    final parsed = Map<String, String>.fromEntries(_parseLines(lines));
     return parsed;
   }
 
@@ -71,9 +71,9 @@ class DiscloudConfigParser {
 
       if (line == null) continue;
 
-      final parts = line.split(_assignmentSymbol);
+      final [key, value] = line.split(_assignmentSymbol);
 
-      yield MapEntry(parts[0], parts[1]);
+      yield MapEntry(key, value);
     }
   }
 }
