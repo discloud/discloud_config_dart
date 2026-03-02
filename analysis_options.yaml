@@ -52,6 +52,7 @@ linter:
     - prefer_if_elements_to_conditional_expressions
     - prefer_int_literals
     - require_trailing_commas
+    - simplify_variable_pattern
     - unawaited_futures
     - unnecessary_await_in_return
     - unnecessary_ignore
