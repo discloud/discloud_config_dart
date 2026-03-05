@@ -1,0 +1,4 @@
+dart pub upgrade --major-versions --tighten --unlock-transitive
+dart fix --apply
+dart run build_runner build -drv
+dart pub cache gc
