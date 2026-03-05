@@ -3,6 +3,7 @@ import "dart:io";
 
 import "package:discloud_config/src/comments/comments.dart";
 import "package:discloud_config/src/data.dart";
+import "package:discloud_config/src/extensions/file.dart";
 import "package:discloud_config/src/extensions/file_system_entity.dart";
 import "package:discloud_config/src/extensions/file_system_event.dart";
 import "package:discloud_config/src/parser.dart";
@@ -72,6 +73,7 @@ class DiscloudConfig {
   static Future<DiscloudConfig> fromFileSystemEntity(
     FileSystemEntity entity, {
     bool autoSave = true,
+    bool atomicSave = true,
   }) async {
     if (entity is File && entity.basename != filename) entity = entity.parent;
 
@@ -85,6 +87,7 @@ class DiscloudConfig {
       entity,
       parser,
       autoSave: autoSave,
+      atomicSave: atomicSave,
     );
 
     await config.refresh();
@@ -107,7 +110,12 @@ class DiscloudConfig {
   static Future<DiscloudConfig> fromFileSystemEvent(
     FileSystemEvent event, {
     bool autoSave = true,
-  }) => fromFileSystemEntity(event.toFileSystemEntity(), autoSave: autoSave);
+    bool atomicSave = true,
+  }) => fromFileSystemEntity(
+    event.toFileSystemEntity(),
+    autoSave: autoSave,
+    atomicSave: atomicSave,
+  );
 
   /// Creates a [DiscloudConfig] instance asynchronously from a file path string.
   ///
@@ -124,6 +132,7 @@ class DiscloudConfig {
   static Future<DiscloudConfig> fromPath(
     String path, {
     bool autoSave = true,
+    bool atomicSave = true,
   }) async {
     final entityType = await FileSystemEntity.type(path);
 
@@ -131,14 +140,17 @@ class DiscloudConfig {
       FileSystemEntityType.directory => fromFileSystemEntity(
         Directory(path),
         autoSave: autoSave,
+        atomicSave: atomicSave,
       ),
       FileSystemEntityType.file => fromFileSystemEntity(
         File(path),
         autoSave: autoSave,
+        atomicSave: atomicSave,
       ),
       FileSystemEntityType.notFound => fromFileSystemEntity(
         File(path).parent,
         autoSave: autoSave,
+        atomicSave: atomicSave,
       ),
       _ => throw ArgumentError.value(path, "path"),
     };
@@ -156,8 +168,11 @@ class DiscloudConfig {
   ///
   /// The [autoSave] parameter controls whether changes are automatically saved.
   /// See the "Auto-saving" section in the class documentation for more details.
-  static Future<DiscloudConfig> fromUri(Uri uri, {bool autoSave = true}) =>
-      fromPath(uri.toFilePath());
+  static Future<DiscloudConfig> fromUri(
+    Uri uri, {
+    bool autoSave = true,
+    bool atomicSave = true,
+  }) => fromPath(uri.toFilePath(), autoSave: autoSave, atomicSave: atomicSave);
 
   /// Creates a new [DiscloudConfig] instance from a [File] object.
   ///
@@ -171,18 +186,23 @@ class DiscloudConfig {
   ///
   /// The [autoSave] parameter controls whether changes are automatically saved.
   /// See the "Auto-saving" section in the class documentation for more details.
-  factory DiscloudConfig(File file, {bool autoSave = true}) =>
-      DiscloudConfig._withInlineCommentRepository(
-        file,
-        InlineCommentRepository(),
-        autoSave: autoSave,
-      );
+  factory DiscloudConfig(
+    File file, {
+    bool autoSave = true,
+    bool atomicSave = true,
+  }) => DiscloudConfig._withInlineCommentRepository(
+    file,
+    InlineCommentRepository(),
+    autoSave: autoSave,
+    atomicSave: atomicSave,
+  );
 
   /// Creates a [DiscloudConfig] instance with a custom [InlineCommentRepository].
   DiscloudConfig._withInlineCommentRepository(
     this.file,
     InlineCommentRepository inlineCommentRepository, {
     this.autoSave = true,
+    this.atomicSave = true,
   }) : _parser = DiscloudConfigParser(
          inlineCommentRepository: inlineCommentRepository,
        );
@@ -194,6 +214,7 @@ class DiscloudConfig {
     this.file,
     DiscloudConfigParser parser, {
     this.autoSave = true,
+    this.atomicSave = true,
   }) : _parser = parser;
 
   /// The configuration file managed by this instance.
@@ -203,6 +224,8 @@ class DiscloudConfig {
   ///
   /// See the "Auto-saving" section in the class documentation for more details.
   final bool autoSave;
+
+  final bool atomicSave;
 
   /// The parser used to read and write the configuration file.
   final DiscloudConfigParser _parser;
@@ -326,6 +349,10 @@ class DiscloudConfig {
   Future<void> _write() async {
     final content = _parser.stringify(data.toJson());
 
-    await file.writeAsString(content, flush: true);
+    if (atomicSave) {
+      await file.writeAsStringAtomically(content);
+    } else {
+      await file.writeAsString(content, flush: true);
+    }
   }
 }

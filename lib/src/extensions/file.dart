@@ -1,9 +1,14 @@
 import "dart:convert";
 import "dart:io";
 import "dart:isolate";
+import "dart:math";
+
+import "package:path/path.dart";
 
 /// An extension on the [File] class.
 extension FileExtension on File {
+  static final _random = Random();
+
   /// Deletes the file in a separate isolate to avoid blocking the main thread.
   Future<FileSystemEntity> isolateDelete() => Isolate.run(delete);
 
@@ -13,11 +18,15 @@ extension FileExtension on File {
   /// the original path. This ensures that the file is never left in a partially
   /// written state.
   Future<File> writeAsBytesAtomically(List<int> bytes) async {
-    final temp = File("${path}_${DateTime.now().microsecondsSinceEpoch}");
+    final tempPath = joinAll([
+      dirname(path),
+      ".${basename(path)}-${_random.nextDouble()}",
+    ]);
+    final temp = File(tempPath);
     await temp.writeAsBytes(bytes, flush: true);
     try {
       await temp.rename(path);
-    } catch (e) {
+    } catch (_) {
       try {
         await temp.delete();
       } catch (_) {}
@@ -35,7 +44,11 @@ extension FileExtension on File {
     String contents, {
     Encoding encoding = utf8,
   }) async {
-    final temp = File("${path}_${DateTime.now().microsecondsSinceEpoch}");
+    final tempPath = joinAll([
+      dirname(path),
+      ".${basename(path)}-${_random.nextDouble()}",
+    ]);
+    final temp = File(tempPath);
     await temp.writeAsString(contents, encoding: encoding, flush: true);
     try {
       await temp.rename(path);
