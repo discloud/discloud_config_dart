@@ -16,9 +16,8 @@ Stream<File> fileListSearch(
   bool Function(File file) where, [
   Function? onError,
 ]) async* {
-  onError ??= _noop;
-
-  await for (final e in directory.list(recursive: true).handleError(onError)) {
+  await for (final e
+      in directory.list(recursive: true).handleError(onError ?? _noop)) {
     if (e is File && where(e)) yield e;
   }
 }
