@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.4.0
+
+- **Feat**: Add the `atomicSave` option to save the `discloud.config` file more securely.
+
 ## 2.3.0
 
 - **Refactor**: Decoupled `DiscloudConfig` from `DiscloudConfigParser`, now the parser is passed as a dependency.
