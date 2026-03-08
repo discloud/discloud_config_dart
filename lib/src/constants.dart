@@ -66,10 +66,18 @@ enum DiscloudRamMinByType {
   final int value;
 
   static DiscloudRamMinByType? _lowest;
+
   /// The lowest minimum
   static DiscloudRamMinByType get lowest => _lowest ??= DiscloudRamMinByType
       .values
       .reduce((a, b) => a.value < b.value ? a : b);
+
+  static DiscloudRamMinByType? _biggest;
+
+  /// The lowest minimum
+  static DiscloudRamMinByType get biggest => _biggest ??= DiscloudRamMinByType
+      .values
+      .reduce((a, b) => b.value < a.value ? b : a);
 }
 
 /// Represents the available versions for a Discloud application.
