@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.4.1
+
+- **Feat**: add lowest minimum RAM calculation
+- **Fix**: fix error handling in RAM validator
+
 ## 2.4.0
 
 - **Feat**: Add the `atomicSave` option to save the `discloud.config` file more securely.
