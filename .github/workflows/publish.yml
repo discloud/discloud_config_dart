@@ -28,6 +28,10 @@ jobs:
       - name: Dart format
         run: dart format .
 
+      # Dart fix
+      - name: Analyze project source
+        run: dart fix --apply
+
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: dart analyze
