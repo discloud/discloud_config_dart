@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.4.2
+
+- **Fix**: fix parser error
+
 ## 2.4.1
 
 - **Feat**: add lowest minimum RAM calculation
