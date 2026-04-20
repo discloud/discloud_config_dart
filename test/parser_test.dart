@@ -9,11 +9,11 @@ void main() {
       inlineCommentRepository: inlineCommentRepository,
     );
 
-    const lines = ["# first comment", "ID=test # second comment", "MAIN=main"];
+    const lines = ["# first comment", "ID=te=st # second comment", "MAIN=main"];
 
     final Map<String, dynamic> rawData = parser.parseLines(lines);
 
-    t.expect(rawData["ID"], "test");
+    t.expect(rawData["ID"], "te=st");
     t.expect(rawData["MAIN"], "main");
   });
 }

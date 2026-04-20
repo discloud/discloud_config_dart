@@ -71,9 +71,9 @@ class DiscloudConfigParser {
 
       if (line == null) continue;
 
-      final [key, value] = line.split(_assignmentSymbol);
+      final [key, ...value] = line.split(_assignmentSymbol);
 
-      yield MapEntry(key, value);
+      yield MapEntry(key, value.join(_assignmentSymbol));
     }
   }
 }
