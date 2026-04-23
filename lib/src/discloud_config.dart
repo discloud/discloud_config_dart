@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:convert";
 import "dart:io";
 
 import "package:discloud_config/src/comments/comments.dart";
@@ -275,7 +276,9 @@ class DiscloudConfig {
   Future<bool> refresh() async {
     if (!await file.exists()) return false;
 
-    final content = await file.readAsString();
+    final chunk = await file.getFirstChunk();
+
+    final content = utf8.decode(chunk);
 
     final rawData = _parser.parseContent(content);
 
