@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.4.3
+
+- **Perf**: Changed the reading of the `discloud.config` file to only read the first part to optimize performance (if the file is too large for some reason)
+
 ## 2.4.2
 
 - **Fix**: fix parser error
