@@ -19,7 +19,7 @@ extension FileExtension on File {
   ///
   /// This method runs the file deletion operation in a separate isolate
   /// to prevent blocking the main thread during I/O operations.
-  /// 
+  ///
   /// Returns a [Future] that completes with the [FileSystemEntity] after deletion.
   Future<FileSystemEntity> isolateDelete() => Isolate.run(delete);
 
