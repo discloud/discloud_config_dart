@@ -13,47 +13,47 @@ part "data.g.dart";
 abstract class DiscloudConfigData with _$DiscloudConfigData {
   // ignore: invalid_annotation_target
   @JsonSerializable(includeIfNull: false)
-  const factory DiscloudConfigData({
+  const factory({
     /// A list of packages to be installed.
-    @TextToIterableConverter() final Iterable<String>? APT,
+    @TextToIterableConverter() Iterable<String>? APT,
 
     /// Whether the application should automatically restart.
-    @TextToBoolConverter() final bool? AUTORESTART,
+    @TextToBoolConverter() bool? AUTORESTART,
 
     /// The URL of the application's avatar.
-    final String? AVATAR,
+    String? AVATAR,
 
     /// The hostname of the application.
-    final String? HOSTNAME,
+    String? HOSTNAME,
 
     /// The ID of the application.
-    final String? ID,
+    String? ID,
 
     /// The main file of the application.
-    final String? MAIN,
+    String? MAIN,
 
     /// The name of the application.
-    final String? NAME,
+    String? NAME,
 
     /// The amount of RAM allocated to the application.
-    @TextToIntConverter() final int? RAM,
+    @TextToIntConverter() int? RAM,
 
     /// The command to start the application.
-    final String? START,
+    String? START,
 
     /// The storage path for the application.
-    final String? STORAGE,
+    String? STORAGE,
 
     /// The type of the application (e.g., 'bot', 'site').
-    final String? TYPE,
+    String? TYPE,
 
     /// The version of the application.
-    final String? VERSION,
+    String? VERSION,
 
     /// Whether the application is on a VLAN.
-    @TextToBoolConverter() final bool? VLAN,
+    @TextToBoolConverter() bool? VLAN,
   }) = _DiscloudConfigData;
 
-  factory DiscloudConfigData.fromJson(Map<String, dynamic> json) =>
-      _DiscloudConfigData.fromJson(json);
+  factory fromJson(Map<String, dynamic> json) =>
+      _$DiscloudConfigDataFromJson(json);
 }

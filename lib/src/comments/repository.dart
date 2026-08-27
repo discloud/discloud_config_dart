@@ -8,7 +8,7 @@ class InlineCommentRepository {
   static final pattern = RegExp(r"(?<content>\s*#.*$)");
 
   /// Creates a new instance of [InlineCommentRepository].
-  InlineCommentRepository();
+  new();
 
   /// A cache of comments, mapping the line number to the [InlineCommentEntity].
   final Map<int, InlineCommentEntity> _cache = {};
@@ -50,11 +50,7 @@ class InlineCommentRepository {
 
   /// Sets a comment at a specific [line] and [character] position.
   void set(int line, int character, String content) {
-    _cache[line] = InlineCommentEntity(
-      line: line,
-      character: character,
-      content: content,
-    );
+    _cache[line] = .new(line: line, character: character, content: content);
   }
 
   /// Writes the stored comments back into a list of lines.

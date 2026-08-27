@@ -24,7 +24,7 @@ abstract class DiscloudValidator {
   }
 
   /// Creates a new instance of [DiscloudValidator].
-  const DiscloudValidator(this.config);
+  const new(this.config);
 
   /// The Discloud configuration to be validated.
   final DiscloudConfig config;

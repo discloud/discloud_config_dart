@@ -17,9 +17,7 @@ class DiscloudConfigParser {
   /// Creates a new instance of [DiscloudConfigParser].
   ///
   /// Requires an [InlineCommentRepository] to handle comments.
-  const DiscloudConfigParser({
-    required InlineCommentRepository inlineCommentRepository,
-  }) : _inlineCommentRepository = inlineCommentRepository;
+  const new({required this._inlineCommentRepository});
 
   final InlineCommentRepository _inlineCommentRepository;
 
@@ -73,7 +71,7 @@ class DiscloudConfigParser {
 
       final [key, ...value] = line.split(_assignmentSymbol);
 
-      yield MapEntry(key, value.join(_assignmentSymbol));
+      yield .new(key, value.join(_assignmentSymbol));
     }
   }
 }

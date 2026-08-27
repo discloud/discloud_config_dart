@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'data.dart';
@@ -9,6 +9,7 @@ part of 'data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -79,7 +80,7 @@ class _$DiscloudConfigDataCopyWithImpl<$Res>
 /// Create a copy of DiscloudConfigData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? APT = freezed,Object? AUTORESTART = freezed,Object? AVATAR = freezed,Object? HOSTNAME = freezed,Object? ID = freezed,Object? MAIN = freezed,Object? NAME = freezed,Object? RAM = freezed,Object? START = freezed,Object? STORAGE = freezed,Object? TYPE = freezed,Object? VERSION = freezed,Object? VLAN = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(DiscloudConfigData(
 APT: freezed == APT ? _self.APT : APT // ignore: cast_nullable_to_non_nullable
 as Iterable<String>?,AUTORESTART: freezed == AUTORESTART ? _self.AUTORESTART : AUTORESTART // ignore: cast_nullable_to_non_nullable
 as bool?,AVATAR: freezed == AVATAR ? _self.AVATAR : AVATAR // ignore: cast_nullable_to_non_nullable

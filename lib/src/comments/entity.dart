@@ -4,14 +4,14 @@ part of "comments.dart";
 @JsonSerializable()
 class InlineCommentEntity {
   /// Creates a new instance of [InlineCommentEntity].
-  const InlineCommentEntity({
+  const new({
     required this.line,
     required this.character,
     required this.content,
   });
 
   /// Creates an [InlineCommentEntity] instance from a JSON map.
-  factory InlineCommentEntity.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$InlineCommentEntityFromJson(json);
 
   /// The line number where the comment is located.

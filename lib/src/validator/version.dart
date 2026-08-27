@@ -7,7 +7,7 @@ class DiscloudVersionValidator extends DiscloudValidator {
   );
 
   /// Creates a new instance of [DiscloudVersionValidator].
-  const DiscloudVersionValidator(super.config);
+  const new(super.config);
 
   @override
   void validate() {
