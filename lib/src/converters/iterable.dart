@@ -7,7 +7,7 @@ class TextToIterableConverter
   static const _separator = ",";
 
   /// Creates a new instance of [TextToIterableConverter].
-  const TextToIterableConverter();
+  const new();
 
   @override
   Iterable<String>? fromJson(dynamic json) {

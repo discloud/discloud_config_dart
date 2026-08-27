@@ -60,7 +60,7 @@ enum DiscloudRamMinByType {
   site(512);
 
   /// Creates a new instance of [DiscloudRamMinByType].
-  const DiscloudRamMinByType(this.value);
+  new(this.value);
 
   /// The minimum RAM value.
   final int value;

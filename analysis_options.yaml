@@ -33,18 +33,23 @@ linter:
     # with auto fixes
     - always_declare_return_types
     - always_put_required_named_parameters_first
+    - always_use_package_imports
     - annotate_redeclares
     - avoid_escaping_inner_quotes
-    - avoid_null_checks_in_equality_operators
+    - avoid_function_literals_in_foreach_calls
     - avoid_redundant_argument_values
     - cascade_invocations
     - combinators_ordering
     - directives_ordering
+    - empty_container_bodies
     - eol_at_end_of_file
+    - initialize_in_field_declaration
     - no_literal_bool_comparisons
     - noop_primitive_operations
+    - prefer_const_constructors
     - prefer_const_constructors_in_immutables
     - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
     - prefer_contains
     - prefer_double_quotes
     - prefer_final_in_for_each
@@ -54,16 +59,18 @@ linter:
     - require_trailing_commas
     - simplify_variable_pattern
     - unawaited_futures
-    - unnecessary_await_in_return
+    - unnecessary_const_in_enum_constructor
     - unnecessary_ignore
     - unnecessary_lambdas
     - unnecessary_parenthesis
+    - unnecessary_primary_constructor_body
     - unnecessary_raw_strings
+    - unnecessary_type_name_in_constructor
     - unnecessary_unawaited
     - use_colored_box
+    - use_declaring_parameters
     - use_decorated_box
     - use_enums
-    - use_if_null_to_convert_nulls_to_bools
     - use_named_constants
     - use_null_aware_elements
     - use_raw_strings

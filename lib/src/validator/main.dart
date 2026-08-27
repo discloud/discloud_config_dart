@@ -3,7 +3,7 @@ part of "validator.dart";
 /// A validator for the `MAIN` file path in the Discloud configuration.
 class DiscloudMainValidator extends DiscloudValidator {
   /// Creates a new instance of [DiscloudMainValidator].
-  const DiscloudMainValidator(super.config);
+  const new(super.config);
 
   @override
   Future<void> validate() async {

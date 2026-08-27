@@ -80,13 +80,9 @@ class DiscloudConfig {
 
     if (entity is! File) entity = File(p.joinAll([entity.path, filename]));
 
-    final repository = InlineCommentRepository();
-
-    final parser = DiscloudConfigParser(inlineCommentRepository: repository);
-
     final config = DiscloudConfig._withParser(
       entity,
-      parser,
+      .new(inlineCommentRepository: .new()),
       autoSave: autoSave,
       atomicSave: atomicSave,
     );
@@ -138,17 +134,17 @@ class DiscloudConfig {
     final entityType = await FileSystemEntity.type(path);
 
     return switch (entityType) {
-      FileSystemEntityType.directory => fromFileSystemEntity(
+      .directory => fromFileSystemEntity(
         Directory(path),
         autoSave: autoSave,
         atomicSave: atomicSave,
       ),
-      FileSystemEntityType.file => fromFileSystemEntity(
+      .file => fromFileSystemEntity(
         File(path),
         autoSave: autoSave,
         atomicSave: atomicSave,
       ),
-      FileSystemEntityType.notFound => fromFileSystemEntity(
+      .notFound => fromFileSystemEntity(
         File(path).parent,
         autoSave: autoSave,
         atomicSave: atomicSave,
@@ -187,31 +183,26 @@ class DiscloudConfig {
   ///
   /// The [autoSave] parameter controls whether changes are automatically saved.
   /// See the "Auto-saving" section in the class documentation for more details.
-  factory DiscloudConfig(
-    File file, {
-    bool autoSave = true,
-    bool atomicSave = true,
-  }) => DiscloudConfig._withInlineCommentRepository(
-    file,
-    InlineCommentRepository(),
-    autoSave: autoSave,
-    atomicSave: atomicSave,
-  );
+  factory(File file, {bool autoSave = true, bool atomicSave = true}) =>
+      ._withInlineCommentRepository(
+        file,
+        .new(),
+        autoSave: autoSave,
+        atomicSave: atomicSave,
+      );
 
   /// Creates a [DiscloudConfig] instance with a custom [InlineCommentRepository].
-  DiscloudConfig._withInlineCommentRepository(
+  new _withInlineCommentRepository(
     this.file,
     InlineCommentRepository inlineCommentRepository, {
     this.autoSave = true,
     this.atomicSave = true,
-  }) : _parser = DiscloudConfigParser(
-         inlineCommentRepository: inlineCommentRepository,
-       );
+  }) : _parser = .new(inlineCommentRepository: inlineCommentRepository);
 
   /// Creates a [DiscloudConfig] instance with a custom [DiscloudConfigParser].
   ///
   /// This constructor is used internally to inject a pre-configured parser.
-  DiscloudConfig._withParser(
+  new _withParser(
     this.file,
     DiscloudConfigParser parser, {
     this.autoSave = true,
@@ -238,8 +229,7 @@ class DiscloudConfig {
   ///
   /// The data is cached for performance. It is only re-parsed when the
   /// configuration is modified programmatically or when [refresh] is called.
-  DiscloudConfigData get data =>
-      _data ??= DiscloudConfigData.fromJson(_rawData);
+  DiscloudConfigData get data => _data ??= .fromJson(_rawData);
 
   /// The `ID` property from the configuration file.
   String? get appId => data.ID;
@@ -248,7 +238,7 @@ class DiscloudConfig {
   File? get main {
     if (data.MAIN case final String mainPath) {
       if (mainPath.isEmpty) return null;
-      return File(p.joinAll([file.parent.path, mainPath]));
+      return .new(p.joinAll([file.parent.path, mainPath]));
     }
     return null;
   }

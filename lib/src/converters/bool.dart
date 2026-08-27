@@ -7,7 +7,7 @@ class TextToBoolConverter extends JsonConverter<bool?, dynamic> {
   static const _bools = {_false, _true};
 
   /// Creates a new instance of [TextToBoolConverter].
-  const TextToBoolConverter();
+  const new();
 
   @override
   bool? fromJson(dynamic json) {

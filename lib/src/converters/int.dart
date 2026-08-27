@@ -3,14 +3,14 @@ import "package:json_annotation/json_annotation.dart";
 /// A [JsonConverter] that converts a `String` or `int` to an `int`.
 class TextToIntConverter extends JsonConverter<int?, dynamic> {
   /// Creates a new instance of [TextToIntConverter].
-  const TextToIntConverter();
+  const new();
 
   @override
   int? fromJson(dynamic json) {
     return switch (json) {
       final int json => json,
       final num json => json.toInt(),
-      final String json => int.tryParse(json),
+      final String json => .tryParse(json),
       _ => null,
     };
   }
